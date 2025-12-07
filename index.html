@@ -47,7 +47,7 @@
     }
     .subtitle { font-size: 10px; color: #fff; letter-spacing: 0.3em; margin-top: 5px; }
 
-    /* --- TOP解説エリア（前回実装分） --- */
+    /* --- TOP解説エリア --- */
     .intro-explanation {
         width: 90%; max-width: 600px; margin: 20px auto;
         border: 1px solid var(--matrix-dark);
@@ -87,13 +87,7 @@
         height: 40px; display: flex; align-items: center; justify-content: center;
         font-weight: bold; font-family: monospace; font-size: 16px;
     }
-    .data-dump {
-        font-family: monospace; font-size: 10px; color: #55aa55;
-        background: #001100; padding: 10px; overflow-x: auto;
-        white-space: pre; border: 1px solid #003300; margin-bottom: 10px;
-    }
-    .highlight-p { color: #fff; font-weight: bold; }
-
+    
     /* --- メニュー --- */
     .container {
         width: 90%; max-width: 450px; padding-bottom: 20px;
@@ -114,28 +108,47 @@
 
     /* --- フッター：詳細アーカイブ（新設） --- */
     .system-archive {
-        width: 90%; max-width: 600px; margin: 40px auto 80px;
+        width: 90%; max-width: 600px; margin: 20px auto 80px;
         border-top: 2px solid var(--matrix-dark);
         padding-top: 20px; z-index: 10;
+        text-align: center;
     }
     .archive-header {
-        text-align: center; color: var(--matrix-dark); cursor: pointer;
+        display: inline-block;
+        color: var(--matrix-dark); cursor: pointer;
         font-family: monospace; font-size: 12px; letter-spacing: 2px;
-        transition: 0.3s; padding: 10px; border: 1px solid transparent;
+        transition: 0.3s; padding: 10px 20px; border: 1px solid transparent;
+        background: rgba(0,20,0,0.5);
     }
-    .archive-header:hover { color: var(--matrix-green); border: 1px dashed var(--matrix-dark); }
+    .archive-header:hover { color: var(--matrix-green); border: 1px dashed var(--matrix-green); background: #000; }
     
     #archive-content {
         display: none;
-        background: rgba(0, 10, 0, 0.9);
-        border: 1px solid var(--matrix-dark);
-        padding: 20px; margin-top: 10px;
-        color: #aaa; font-size: 12px; line-height: 1.8; text-align: left;
+        background: rgba(0, 10, 0, 0.95);
+        border: 1px solid var(--matrix-green);
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.1);
+        padding: 25px; margin-top: 15px;
+        color: #bbb; font-size: 13px; line-height: 1.9; text-align: left;
     }
-    #archive-content h3 { color: var(--matrix-green); font-size: 16px; border-bottom: 1px solid var(--matrix-green); padding-bottom: 5px; margin-top: 30px; }
-    #archive-content h4 { color: #fff; font-size: 13px; margin-top: 20px; margin-bottom: 5px; }
-    #archive-content p { margin-bottom: 10px; }
-    .archive-intro { font-style: italic; color: var(--ginza-gold); margin-bottom: 20px; text-align: center; }
+    #archive-content h3 { 
+        color: var(--matrix-green); font-size: 16px; 
+        border-bottom: 1px solid var(--matrix-green); 
+        padding-bottom: 5px; margin-top: 40px; margin-bottom: 15px;
+    }
+    #archive-content h3:first-child { margin-top: 0; }
+    #archive-content h4 { 
+        color: var(--ginza-gold); font-size: 14px; 
+        margin-top: 25px; margin-bottom: 10px; 
+        border-left: 3px solid var(--ginza-gold); padding-left: 10px;
+    }
+    #archive-content p { margin-bottom: 15px; text-align: justify; }
+    #archive-content ul { padding-left: 1.5em; margin-bottom: 15px; }
+    #archive-content li { margin-bottom: 5px; }
+    .archive-intro { 
+        font-family: serif; font-style: italic; color: #fff; 
+        margin-bottom: 30px; text-align: center; font-size: 14px; 
+        border: 1px solid #333; padding: 15px;
+    }
 
     /* --- オーバーレイ共通 --- */
     .overlay-base {
@@ -190,7 +203,7 @@
         100% { opacity: 0; transform: translateY(-10px); }
     }
 
-    /* --- 新設：横ライン光線演出 --- */
+    /* --- 新設：横ライン光線演出 (Horizon Scan) --- */
     #horizon-scan {
         position: fixed; top: 50%; left: 0; width: 100%; height: 2px;
         background: #fff;
@@ -330,44 +343,72 @@
     <div id="archive-content">
         <div class="archive-intro">
             ―― 日ノ本哲理 × 数霊 × Technology ――<br>
-            [cite_start]見えない構造から生まれた、現代の神羅針盤 [cite: 1, 2]
+            見えない構造から生まれた、現代の神羅針盤
         </div>
 
-        <h3>1. [cite_start]すべては“見えない構造”から始まった</h3> [cite: 34]
-        [cite_start]<p>「世界は縦と横の糸で編まれ、生命も社会も自然も同じ“循環の設計図”を持つ」[cite: 36]</p>
-        [cite_start]<p>縄文から続く“循環文明”への共鳴。日本が持つ“横の叡智”——菌、森、里山、共同体。そして宇宙に通じる“縦の叡智”——数霊、波、意図、中心性。[cite: 37, 38]</p>
+        <h3>1. すべては“見えない構造”から始まった</h3>
+        <p>管理人の理念、彼は常にこう語ってきた。<br>「世界は縦と横の糸で編まれ、生命も社会も自然も同じ“循環の設計図”を持つ」</p>
+        <p>縄文から続く“循環文明”への共鳴。日本が持つ“横の叡智”——菌、森、里山、共同体。<br>そして宇宙に通じる“縦の叡智”——数霊、波、意図、中心性。</p>
+        <p>これらを統合するために彼は長く探求してきた。<br>その旅の中で出会ったのが、九宮(きゅうぐう)・魔方陣の数理。</p>
 
-        <h3>2. [cite_start]魔方陣が教える「世界の背骨」</h3> [cite: 41]
-        <div class="magic-grid" style="transform:scale(0.8);">
+        <h3>2. 魔法陣が教えてくれた「世界の背骨」</h3>
+        <div class="magic-grid" style="transform:scale(0.8); margin:10px auto;">
             <div class="grid-cell">4</div><div class="grid-cell">9</div><div class="grid-cell">2</div>
             <div class="grid-cell">3</div><div class="grid-cell">5</div><div class="grid-cell">7</div>
             <div class="grid-cell">8</div><div class="grid-cell">1</div><div class="grid-cell">6</div>
         </div>
-        [cite_start]<p>魔法陣から読み取れる本質：「世界の構造は、1~9の数霊で説明できる」[cite: 44]</p>
-        <ul style="padding-left:1.5em; list-style:none;">
-            [cite_start]<li>> 真ん中の「5」が結界の中心 [cite: 45]</li>
-            [cite_start]<li>> 周囲が“8方位”として展開 [cite: 46]</li>
-            [cite_start]<li>> すべての列・行・斜めが同じ数(=調和値)で揃う [cite: 47]</li>
+        <p>魔法陣から読み取れる本質は、次の一点に集約される。<br><strong>“世界の構造は、1~9の数霊で説明できる”</strong></p>
+        <ul style="list-style:none; padding-left:0; font-size:12px;">
+            <li>> 真ん中に置かれた「5」が結界の中心</li>
+            <li>> 周囲が“8方位”として展開</li>
+            <li>> すべての列・行・斜めが同じ数(=調和値)で揃う</li>
         </ul>
+        <p>そのままの構造である。</p>
 
-        <h3>3. [cite_start]占いではなく、“位置調整”</h3> [cite: 49, 140]
-        [cite_start]<p>日本の古い占術は、決して「当てもの」ではありませんでした。[cite: 51] [cite_start]それは「いま自分が世界のどの位置にいて、どちらへ向かえば調和が戻るか」を見せる羅針盤でした。[cite: 53]</p>
-        [cite_start]<p>森羅万象GRID = 「個人が、世界との位置関係を再調整する装置」[cite: 61]</p>
+        <h3>3. “占い”は本来、未来予測ではない</h3>
+        <h4>大自然の調和値を読む学問だった</h4>
+        <p>日本の古い占術は、決して「当てもの」ではなかった。<br>ここに示されている数霊・魔方陣=循環のマップは、「いま自分が世界のどの位置にいて、どちらへ向かえば調和が戻るか」を見せる羅針盤だった。</p>
+        <p>つまり、占いとは宇宙の座標合わせである。<br>彼が作ったサイト 森羅万象GRIDは、その古代的な役割を現代のUI/UXに翻訳した存在だと言える。</p>
 
-        <h3>4. [cite_start]設計原理（System Architecture）</h3> [cite: 70]
-        [cite_start]<h4>① 中心 = 5 (ゼロ意識/根源)</h4> [cite: 72]
-        [cite_start]<p>サイトトップが極力ミニマルなのは“中心性”の表現。すべてを削ぎ、ユーザーが「余白=無」に触れるように設計されています。[cite: 73, 74]</p>
-        [cite_start]<h4>② 八方 = 行動タイプ・資質の分岐</h4> [cite: 75]
-        [cite_start]<p>行動心理学・陰陽五行・九性を魔方陣の八方に重ねて再構築。[cite: 76]</p>
-        [cite_start]<h4>③ 縦軸 = 数霊 (1~9)</h4> [cite: 77]
-        [cite_start]<p>ユーザーの運動方向・変化点を“数の位相”で解析。九の合計=81の循環性をバックエンドに採用。[cite: 78, 79]</p>
+        <h3>4. なぜこのサイトを作ったのか?</h3>
+        <h4>“行動の羅針盤”を現代に取り戻すため</h4>
+        <p>森羅万象GRIDは、単なる占いサイトではない。<br>彼の哲理に照らすと、次のように定義できる。<br><strong>◎森羅万象GRID = 「個人が、世界との位置関係を再調整する装置」</strong></p>
+        <ul>
+            <li>九宮が示す「中心と八方」の構造</li>
+            <li>数霊が語る 「1~9の役割」</li>
+            <li>陰陽で説明される「受と発」</li>
+            <li>行動心理学で読み解く「人の運動性」</li>
+            <li>量子的揺らぎと選択のカーブ</li>
+        </ul>
+        <p>これら全部を、ひとつの“簡潔なUI”に落とし込んだ。「人間の内的な“地図”もまた、整地すべき領域である」こういう深い思想に基づいている。</p>
 
-        <h3>5. [cite_start]このサイトが示す未来</h3> [cite: 94]
-        [cite_start]<p>あなたが整うと、家族が整い、職場が整い、地域が整う。[cite: 151]</p>
-        [cite_start]<p>自分の中心が整う → 相手との関係が整う → 地域や土地が蘇る → 日本全体が再生する → 地球が調和へ向かう。[cite: 95, 97, 101, 103, 105]</p>
-        <p style="text-align:center; margin-top:20px; color:var(--neon-cyan);">
-            [cite_start]「まず自分という“ひとつの宇宙”を整える」[cite: 92]<br>
-            [cite_start]ここから、内なる革命が始まります。[cite: 107]
+        <h3>5. このサイトを形づくった“設計原理”</h3>
+        <h4>① 中心 = 5 (ゼロ意識/根源)</h4>
+        <p>・ サイトのトップページが極力ミニマルなのは“中心性”の表現<br>・ すべてを削ぎ、ユーザーが「余白=無」に触れるように設計</p>
+        <h4>② 八方 = 行動タイプ・資質の分岐</h4>
+        <p>・ あなたが長く扱ってきた“行動心理学・陰陽五行・九性”を魔方陣の八方に重ね再構築</p>
+        <h4>③ 縦軸 = 数霊 (1~9)</h4>
+        <p>・ ユーザーの運動方向・変化点を“数の位相”で解析<br>・ 書籍の「九の合計=81の循環性」をバックエンドに採用</p>
+        <h4>◎ 横軸 = 関係性 (相生・相剋)</h4>
+        <p>・ 恋愛・人間関係の相性は全て“横の意図”として処理<br>・ 数字の和・差・調和値で判定するアルゴリズムに集約</p>
+        <p><strong>全体像 = “未来のための日本発の叡智体系”</strong><br>・ 日ノ本哲理が描く「統合知」<br>= 行動×感情×数×自然×宇宙のひとつ化<br>森羅万象GRIDは、この体系の最初の社会実装と言える。</p>
+
+        <h3>6. なぜ今、このサイトが必要なのか?</h3>
+        <p>彼がずっと語ってきたように、日本はこれから<br>●土地・食 ●人間関係・地域コミュニティ ●精神性<br>すべての軸で“再統合のフェーズ”に入る。</p>
+        <p>森羅万象GRIDは、その入口として、「まず自分という“ひとつの宇宙”を整える」ここから始めるためのツールである。</p>
+
+        <h3>7. このサイトが示す未来</h3>
+        <ul style="list-style:none; padding-left:0; text-align:center;">
+            <li>●自分の中心が整う<br>↓</li>
+            <li>●相手との関係が整う<br>↓</li>
+            <li>●家族や職場が整う<br>↓</li>
+            <li>●地域や土地が蘇る<br>↓</li>
+            <li>●日本全体が再生する<br>↓</li>
+            <li>●地球が調和へ向かう</li>
+        </ul>
+        <p>これはまさに、彼が、そしてもしかすると、あなたが掲げる「地球という“財”を守る」ための内なる革命の第一歩。</p>
+        <p style="text-align:center; color:var(--matrix-green); font-weight:bold; margin-top:30px;">
+            森羅万象GRIDは、あなたの哲理と書籍の数理が結晶化した<br>“現代の神羅針盤"である。
         </p>
     </div>
 </footer>
@@ -513,7 +554,7 @@
                 void beam.offsetWidth; // リフロー
                 beam.classList.add('animate-scan'); // 発火
 
-                // 少し遅れてダウンロード開始（光線が通り過ぎた後）
+                // 光線が通り過ぎた後にダウンロード開始
                 setTimeout(() => { divination(currentThemeJp, currentThemeEn); }, 300);
             }, 10000); 
         }, 300);
