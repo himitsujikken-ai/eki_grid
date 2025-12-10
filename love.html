@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>神羅万象グリッド | 恋愛アルゴリズム解析</title>
 <meta name="description" content="マトリックス風恋愛占い。あなたの恋のソースコードをデバッグします。">
+<meta property="og:title" content="神羅万象グリッド【恋愛解析】">
+<meta property="og:description" content="恋のバグ、見つけます。運命のソースコードをハッキング。">
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <style>
     /* --- デザインテーマ：The Matrix Love Grid --- */
@@ -14,8 +16,7 @@
         --neon-cyan: #00f2ff;
         --ginza-gold: #c5a059;
         --text-color: #e0e0e0;
-        --love-pink: #ff69b4; /* 恋愛用アクセント */
-        --love-dark: #33001a;
+        --love-pink: #ff69b4;
     }
 
     body {
@@ -33,19 +34,19 @@
     }
 
     header {
-        width: 100%; padding: 40px 20px 20px; text-align: center;
+        width: 100%; padding: 30px 20px 10px; text-align: center;
         background: linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.8) 100%);
         z-index: 10;
     }
 
     h1 {
-        font-size: 28px; color: var(--matrix-green);
+        font-size: 26px; color: var(--matrix-green);
         text-shadow: 0 0 10px var(--matrix-green);
         margin: 0; letter-spacing: 0.1em; font-family: monospace;
     }
     .subtitle { font-size: 10px; color: #fff; letter-spacing: 0.3em; margin-top: 5px; }
 
-    /* 解説エリア（恋愛版アレンジ） */
+    /* 解説エリア（恋愛版） */
     .intro-explanation {
         width: 90%; max-width: 600px; margin: 20px auto;
         border: 1px solid var(--love-pink);
@@ -60,21 +61,17 @@
         color: var(--love-pink); font-weight: bold; font-size: 16px;
         margin-bottom: 5px; border-bottom: 1px dashed var(--love-pink); padding-bottom: 5px;
     }
-    .highlight { color: var(--love-pink); font-weight: bold; }
 
-    /* --- メニュー --- */
+    /* メニュー */
     .container {
         width: 90%; max-width: 450px; padding-bottom: 20px;
         display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
         z-index: 10; margin-top: 10px;
     }
-
     .menu-btn {
         position: relative; width: 100%; padding: 25px 10px;
-        background: rgba(0, 30, 0, 0.6);
-        color: var(--matrix-green);
-        border: 1px solid rgba(0, 255, 0, 0.3);
-        border-radius: 2px;
+        background: rgba(0, 30, 0, 0.6); color: var(--matrix-green);
+        border: 1px solid rgba(0, 255, 0, 0.3); border-radius: 2px;
         font-family: monospace; font-size: 14px; letter-spacing: 0.05em;
         cursor: pointer; transition: 0.2s;
         box-shadow: 0 0 5px rgba(0, 255, 0, 0.1);
@@ -82,17 +79,22 @@
     .menu-btn:active { transform: scale(0.96); background: rgba(0, 255, 0, 0.1); }
     .menu-btn span { display: block; font-size: 10px; opacity: 0.7; margin-top: 5px; color: #fff; }
     .menu-btn.full-width { grid-column: 1 / 3; border-color: var(--love-pink); color: var(--love-pink); }
+    
+    /* 履歴ボタン */
+    .btn-history {
+        grid-column: 1 / 3;
+        background: rgba(30, 0, 10, 0.6); color: #aaa;
+        border: 1px dashed var(--love-pink); font-size: 12px; padding: 15px;
+    }
 
-    /* --- フッター：詳細アーカイブ（恋愛版カラー） --- */
+    /* フッター：詳細アーカイブ（恋愛版カラー） */
     .system-archive {
         width: 90%; max-width: 600px; margin: 20px auto 80px;
         border-top: 2px solid var(--love-pink);
-        padding-top: 20px; z-index: 10;
-        text-align: center;
+        padding-top: 20px; z-index: 10; text-align: center;
     }
     .archive-header {
-        display: inline-block;
-        color: var(--text-color); cursor: pointer;
+        display: inline-block; color: var(--text-color); cursor: pointer;
         font-family: monospace; font-size: 12px; letter-spacing: 2px;
         transition: 0.3s; padding: 10px 20px; border: 1px solid transparent;
         background: rgba(30,0,10,0.5);
@@ -100,24 +102,14 @@
     .archive-header:hover { color: var(--love-pink); border: 1px dashed var(--love-pink); background: #000; }
     
     #archive-content {
-        display: none;
-        background: rgba(10, 0, 5, 0.95);
+        display: none; background: rgba(10, 0, 5, 0.95);
         border: 1px solid var(--love-pink);
         box-shadow: 0 0 20px rgba(255, 105, 180, 0.1);
         padding: 25px; margin-top: 15px;
         color: #bbb; font-size: 13px; line-height: 1.9; text-align: left;
     }
-    #archive-content h3 { 
-        color: var(--love-pink); font-size: 16px; 
-        border-bottom: 1px solid var(--love-pink); 
-        padding-bottom: 5px; margin-top: 40px; margin-bottom: 15px;
-    }
-    #archive-content h3:first-child { margin-top: 0; }
-    #archive-content h4 { 
-        color: var(--ginza-gold); font-size: 14px; 
-        margin-top: 25px; margin-bottom: 10px; 
-        border-left: 3px solid var(--ginza-gold); padding-left: 10px;
-    }
+    #archive-content h3 { color: var(--love-pink); font-size: 16px; border-bottom: 1px solid var(--love-pink); margin-top: 40px; margin-bottom: 15px; }
+    #archive-content h4 { color: var(--ginza-gold); font-size: 14px; margin-top: 25px; border-left: 3px solid var(--ginza-gold); padding-left: 10px; }
     #archive-content p { margin-bottom: 15px; text-align: justify; }
     #archive-content ul { padding-left: 1.5em; margin-bottom: 15px; }
     .archive-intro { 
@@ -125,7 +117,7 @@
         margin-bottom: 30px; text-align: center; font-size: 14px; 
         border: 1px solid #333; padding: 15px;
     }
-    /* 3x3 Grid in Archive */
+    /* Archive Grid */
     .magic-grid {
         display: grid; grid-template-columns: repeat(3, 1fr);
         gap: 2px; width: 120px; margin: 10px auto;
@@ -137,7 +129,17 @@
         font-weight: bold; font-family: monospace; font-size: 16px;
     }
 
-    /* --- 共通オーバーレイ --- */
+    /* 履歴モーダル */
+    #history-modal { z-index: 2500; justify-content: flex-start; padding-top: 80px; }
+    .history-list {
+        width: 100%; max-width: 500px; max-height: 70vh; overflow-y: auto;
+        border: 1px solid var(--love-pink); background: rgba(20,0,10,0.9); padding: 10px;
+    }
+    .history-item { border-bottom: 1px dashed #555; padding: 10px; text-align: left; font-size: 12px; }
+    .history-theme { color: var(--love-pink); font-weight: bold; }
+    .history-result { color: #fff; margin-top: 5px; font-size: 14px; }
+
+    /* オーバーレイ共通 */
     .overlay-base {
         display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
         background-color: rgba(0, 0, 0, 0.95);
@@ -148,7 +150,7 @@
     }
     .overlay-base.show { opacity: 1; }
 
-    /* Step 1: インストラクション */
+    /* インストラクション */
     #instruction-overlay { z-index: 1500; }
     .instruction-box {
         width: 100%; max-width: 400px; padding: 30px 25px;
@@ -165,7 +167,7 @@
     .instruction-text { font-size: 18px; line-height: 2; margin-bottom: 30px; color: var(--text-color); font-family: monospace;}
     .highlight-text { color: var(--love-pink); font-weight: bold; font-size: 24px; }
 
-    /* Step 2: アップロード演出 */
+    /* アップロード演出 */
     #upload-overlay { z-index: 2100; }
     .upload-stream {
         position: absolute; bottom: 0; left: 50%; width: 2px; height: 100%;
@@ -175,41 +177,27 @@
     .stream-1 { margin-left: -20px; animation-delay: 0.1s; height: 80%; }
     .stream-2 { margin-left: 0px; animation-duration: 2s; }
     .stream-3 { margin-left: 20px; animation-delay: 0.3s; height: 90%; }
-    @keyframes uploadFlow {
-        0% { transform: translateY(100%) scaleY(0.5); opacity: 0; }
-        50% { opacity: 1; }
-        100% { transform: translateY(-100%) scaleY(1.5); opacity: 0; }
-    }
+    @keyframes uploadFlow { 0% { transform: translateY(100%) scaleY(0.5); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(-100%) scaleY(1.5); opacity: 0; } }
     .upload-text-container { height: 60px; display: flex; justify-content: center; align-items: center; z-index: 10; }
     .upload-text { font-size: 16px; letter-spacing: 2px; color: var(--love-pink); text-shadow: 0 0 10px var(--love-pink); }
     .fade-text { animation: textFade 2.8s linear forwards; }
-    @keyframes textFade {
-        0% { opacity: 0; transform: translateY(10px); }
-        20% { opacity: 1; transform: translateY(0); }
-        80% { opacity: 1; transform: translateY(0); }
-        100% { opacity: 0; transform: translateY(-10px); }
-    }
+    @keyframes textFade { 0% { opacity: 0; transform: translateY(10px); } 20% { opacity: 1; transform: translateY(0); } 80% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-10px); } }
 
-    /* 横ライン光線（恋愛版はピンク） */
+    /* 横ライン光線（ピンク） */
     #horizon-scan {
         position: fixed; top: 50%; left: 0; width: 100%; height: 2px;
-        background: #fff;
-        box-shadow: 0 0 20px #fff, 0 0 40px var(--love-pink);
+        background: #fff; box-shadow: 0 0 20px #fff, 0 0 40px var(--love-pink);
         z-index: 2150; transform: scaleX(0); opacity: 0; pointer-events: none;
     }
     .animate-scan { animation: horizonScan 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-    @keyframes horizonScan {
-        0% { transform: scaleX(0); opacity: 1; }
-        50% { transform: scaleX(1); opacity: 1; }
-        100% { transform: scaleX(1); opacity: 0; }
-    }
+    @keyframes horizonScan { 0% { transform: scaleX(0); opacity: 1; } 50% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
 
-    /* Step 3: ダウンロード */
+    /* ダウンロード */
     #loading-overlay { z-index: 2200; }
     .progress-bar { width: 200px; height: 2px; background: #003300; margin-top: 10px; }
     .progress-fill { width: 0%; height: 100%; background: var(--love-pink); transition: width 0.2s; }
 
-    /* Step 4: 結果モーダル */
+    /* 結果モーダル */
     #result-area { z-index: 1000; background-color: rgba(0, 0, 0, 0.9); }
     .result-box {
         width: 100%; max-width: 400px; padding: 40px 20px;
@@ -225,15 +213,14 @@
     .mode-iching { border: 1px solid var(--matrix-green); color: var(--matrix-green); }
     .mode-iching .symbol { color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); font-size: 80px; }
     .mode-god, .mode-override {
-        border: 2px solid var(--love-pink);
-        background: linear-gradient(135deg, #2a0015, #000);
-        box-shadow: 0 0 60px rgba(255, 105, 180, 0.4);
-        animation: borderPulseLove 2s infinite;
+        border: 2px solid var(--love-pink); background: linear-gradient(135deg, #2a0015, #000);
+        box-shadow: 0 0 60px rgba(255, 105, 180, 0.4); animation: borderPulseLove 2s infinite;
     }
     @keyframes borderPulseLove { 0% { border-color: var(--love-pink); } 50% { border-color: #fff; } 100% { border-color: var(--love-pink); } }
     @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+    @keyframes blink { from { opacity: 1; } to { opacity: 0.5; } }
+    
     .mode-god .symbol { color: var(--love-pink); text-shadow: 0 0 30px var(--love-pink); }
-
     .symbol { display: block; margin-bottom: 10px; line-height: 1; }
     .name { font-size: 28px; font-weight: bold; margin: 10px 0; letter-spacing: 0.1em; }
     .sub-name { font-size: 11px; opacity: 0.7; letter-spacing: 1px; margin-bottom: 20px; font-family: monospace; }
@@ -244,7 +231,6 @@
         border-radius: 4px; margin-top: 10px;
     }
     
-    /* オーバーライド演出（恋愛版） */
     .override-original {
         opacity: 0.6; text-decoration: line-through double var(--love-pink); font-size: 12px;
         background: rgba(50,0,20,0.3); border: 1px dashed var(--love-pink); padding: 10px; margin-bottom: 15px; position: relative;
@@ -256,32 +242,23 @@
     .god-appear-container { opacity: 0; transform: scale(0.8) translateY(20px); transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
     .god-appear-container.show-override { opacity: 1; transform: scale(1) translateY(0); }
 
-    /* サブ結果表示 */
     .sub-result-area {
-        margin-top: 25px; padding-top: 15px;
-        border-top: 1px dashed rgba(255,105,180,0.3);
+        margin-top: 25px; padding-top: 15px; border-top: 1px dashed rgba(255,105,180,0.3);
         text-align: left; font-size: 12px; color: rgba(224, 224, 224, 0.8);
     }
     .sub-result-title { font-weight: bold; margin-bottom: 5px; color: var(--love-pink); }
 
     /* アクションボタン */
     .action-area { width: 100%; max-width: 400px; margin-top: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1001; }
-    .btn-row { display: flex; gap: 10px; }
-    .btn-row .action-btn { flex: 1; }
+    .btn-row { display: flex; gap: 10px; } .btn-row .action-btn { flex: 1; }
     .action-btn {
         padding: 15px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;
-        display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-size: 14px;
-        font-family: monospace;
+        display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-size: 14px; font-family: monospace;
     }
-    .btn-share { background: var(--matrix-green); color: #000; box-shadow: 0 0 10px var(--matrix-green); }
+    .btn-love-primary { background: var(--love-pink); color: #fff; box-shadow: 0 0 10px var(--love-pink); }
+    .btn-cal { background: #003366; color: #fff; border: 1px solid #0055aa; box-shadow: 0 0 10px #003366; }
     .btn-x { background: #000; color: #fff; border: 1px solid #fff; }
     .btn-close { background: transparent; color: #888; border: 1px solid #333; }
-    /* 恋愛版はピンク */
-    .btn-love-primary { background: var(--love-pink); color: #fff; box-shadow: 0 0 10px var(--love-pink); }
-    /* カレンダー（青） */
-    .btn-cal { background: #003366; color: #fff; border: 1px solid #0055aa; box-shadow: 0 0 10px #003366; }
-    
-    /* トップへ戻る */
     .btn-back-top { margin-top:20px; background: transparent; color: #666; border: none; font-size:12px; cursor:pointer; }
 
 </style>
@@ -300,21 +277,13 @@
 </header>
 
 <div class="container">
-    <button class="menu-btn" onclick="initiateDivination('今の関係性', 'Current Status')">
-        今の関係性<span>> Status Check</span>
-    </button>
-    <button class="menu-btn" onclick="initiateDivination('相手の気持ち', 'Target Feelings')">
-        相手の気持ち<span>> Scan Target Emotion</span>
-    </button>
-    <button class="menu-btn" onclick="initiateDivination('今後の展開', 'Future Route')">
-        今後の展開<span>> Predict Future</span>
-    </button>
-    <button class="menu-btn" onclick="initiateDivination('復縁の可能性', 'Reconnect Odds')">
-        復縁の可能性<span>> Reconnection Prob.</span>
-    </button>
-    <button class="menu-btn full-width" onclick="initiateDivination('隠された真実（核心）', 'Deep Love Dive')">
-        深層ダイブ（二人の核心）<span>> Execute Deep Dive</span>
-    </button>
+    <button class="menu-btn" onclick="initiateDivination('今の関係性', 'Current Status')">今の関係性<span>> Status Check</span></button>
+    <button class="menu-btn" onclick="initiateDivination('相手の気持ち', 'Target Feelings')">相手の気持ち<span>> Scan Target Emotion</span></button>
+    <button class="menu-btn" onclick="initiateDivination('今後の展開', 'Future Route')">今後の展開<span>> Predict Future</span></button>
+    <button class="menu-btn" onclick="initiateDivination('復縁の可能性', 'Reconnect Odds')">復縁の可能性<span>> Reconnection Prob.</span></button>
+    <button class="menu-btn full-width" onclick="initiateDivination('隠された真実（核心）', 'Deep Love Dive')">深層ダイブ（二人の核心）<span>> Execute Deep Dive</span></button>
+    
+    <button class="menu-btn btn-history" onclick="showHistory()">📜 恋愛観測ログ（履歴）を見る</button>
     <button class="btn-back-top" onclick="location.href='index.html'">← 通常グリッドへ戻る</button>
 </div>
 
@@ -327,11 +296,9 @@
             ―― 日ノ本哲理 × 数霊 × Technology ――<br>
             見えない構造から生まれた、現代の神羅針盤
         </div>
-
         <h3>1. すべては“見えない構造”から始まった</h3>
         <p>管理人の理念、彼は常にこう語ってきた。<br>「世界は縦と横の糸で編まれ、生命も社会も自然も同じ“循環の設計図”を持つ」</p>
         <p>縄文から続く“循環文明”への共鳴。日本が持つ“横の叡智”——菌、森、里山、共同体。<br>そして宇宙に通じる“縦の叡智”——数霊、波、意図、中心性。</p>
-
         <h3>2. 魔法陣が教えてくれた「世界の背骨」</h3>
         <div class="magic-grid" style="transform:scale(0.8); margin:10px auto;">
             <div class="grid-cell">4</div><div class="grid-cell">9</div><div class="grid-cell">2</div>
@@ -339,19 +306,13 @@
             <div class="grid-cell">8</div><div class="grid-cell">1</div><div class="grid-cell">6</div>
         </div>
         <p>魔法陣から読み取れる本質は、次の一点に集約される。<br><strong>“世界の構造は、1~9の数霊で説明できる”</strong></p>
-
         <h3>3. “占い”は本来、未来予測ではない</h3>
-        <h4>大自然の調和値を読む学問だった</h4>
         <p>日本の古い占術は、決して「当てもの」ではなかった。<br>「いま自分が世界のどの位置にいて、どちらへ向かえば調和が戻るか」を見せる羅針盤だった。</p>
-
         <h3>4. なぜこのサイトを作ったのか?</h3>
-        <h4>“行動の羅針盤”を現代に取り戻すため</h4>
         <p>森羅万象GRIDは、単なる占いサイトではない。<br><strong>◎森羅万象GRID = 「個人が、世界との位置関係を再調整する装置」</strong></p>
-
         <h3>5. このサイトを形づくった“設計原理”</h3>
         <h4>◎ 横軸 = 関係性 (相生・相剋)</h4>
         <p>・ 恋愛・人間関係の相性は全て“横の意図”として処理<br>・ 数字の和・差・調和値で判定するアルゴリズムに集約</p>
-
         <h3>6. このサイトが示す未来</h3>
         <ul style="list-style:none; padding-left:0; text-align:center;">
             <li>●自分の中心が整う<br>↓</li>
@@ -359,8 +320,15 @@
             <li>●家族や職場が整う<br>↓</li>
             <li>●地球が調和へ向かう</li>
         </ul>
+        <p>これはまさに、彼が、そしてもしかすると、あなたが掲げる「地球という“財”を守る」ための内なる革命の第一歩。</p>
     </div>
 </footer>
+
+<div id="history-modal" class="overlay-base">
+    <h2 style="color:var(--love-pink); border-bottom:1px solid var(--love-pink); width:100%; max-width:500px; padding-bottom:10px;">> ACCESS LOGS (LOVE)</h2>
+    <div id="history-list" class="history-list"></div>
+    <button class="action-btn btn-close" style="margin-top:20px;" onclick="closeHistory()">Close Logs</button>
+</div>
 
 <div id="horizon-scan"></div>
 
@@ -370,27 +338,16 @@
             <div id="instruction-theme-jp"></div>
             <div id="instruction-theme-en"></div>
         </div>
-
         <div class="instruction-icon">💓</div>
-        <p class="instruction-text">
-            雑念を捨てよ。<br>
-            相手の顔を思い浮かべ<br>
-            <span class="highlight-text" style="color:var(--love-pink);">三回</span>、名を唱えよ。
-        </p>
-        <button id="proceed-btn" class="action-btn btn-love-primary" onclick="startUploadSequence()">
-            唱えた。接続を開始する。
-        </button>
-        <button class="action-btn btn-close" style="margin-top:10px; background:transparent; border:1px solid var(--love-pink); color:var(--love-pink);" onclick="closeInstruction()">
-            ← メニューに戻る
-        </button>
+        <p class="instruction-text">雑念を捨てよ。<br>相手の顔を思い浮かべ<br><span style="color:var(--love-pink); font-size:24px; font-weight:bold;">三回</span>、名を唱えよ。</p>
+        <button class="action-btn btn-love-primary" onclick="startUploadSequence()">唱えた。接続を開始する。</button>
+        <button class="action-btn btn-close" style="margin-top:10px; border:1px solid var(--love-pink); color:var(--love-pink);" onclick="closeInstruction()">← メニューに戻る</button>
     </div>
 </div>
 
 <div id="upload-overlay" class="overlay-base">
-    <div class="upload-stream stream-1"></div>
-    <div class="upload-stream stream-2"></div>
-    <div class="upload-stream stream-3"></div>
-    <div class="upload-text-container">
+    <div class="upload-stream stream-1"></div><div class="upload-stream stream-2"></div><div class="upload-stream stream-3"></div>
+    <div class="upload-text-container" style="height:60px; display:flex; align-items:center;">
         <div id="upload-text-dynamic" class="upload-text">INITIALIZING...</div>
     </div>
     <div style="font-size:10px; margin-top:10px; opacity:0.7; color:var(--love-pink);">CONNECTING TO LOVE GRID</div>
@@ -420,114 +377,103 @@
 </div>
 
 <script>
-    /* --- Matrix Rain (共通) --- */
-    const canvas = document.getElementById('matrix-canvas');
-    const ctx = canvas.getContext('2d');
+    /* Matrix Rain */
+    const canvas = document.getElementById('matrix-canvas'); const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-    const katakana = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ';
-    const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    const alphabet = katakana + latin;
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ';
+    const fontSize = 14; const columns = canvas.width / fontSize;
     const drops = []; for(let i=0; i<columns; i++) drops[i]=1;
-    function drawMatrix() {
+    function draw() {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = '#0F0'; ctx.font = fontSize + 'px monospace';
         for(let i=0; i<drops.length; i++) {
-            const text = alphabet.charAt(Math.floor(Math.random()*alphabet.length));
+            const text = chars.charAt(Math.floor(Math.random()*chars.length));
             ctx.fillText(text, i*fontSize, drops[i]*fontSize);
             if(drops[i]*fontSize > canvas.height && Math.random()>0.975) drops[i]=0;
             drops[i]++;
         }
     }
-    // 修正：スピードを遅く
-    setInterval(drawMatrix, 80);
-    window.addEventListener('resize', ()=>{canvas.width=window.innerWidth; canvas.height=window.innerHeight;});
+    setInterval(draw, 80); window.addEventListener('resize', ()=>{canvas.width=window.innerWidth; canvas.height=window.innerHeight;});
 
-    /* --- ロジック --- */
-    let currentThemeJp="", currentThemeEn="";
-
+    /* UI Logic */
     function toggleOverlay(id, show) {
-        const overlay = document.getElementById(id);
-        if(show){ overlay.style.display="flex"; setTimeout(()=>{overlay.classList.add("show");},10); }
-        else{ overlay.classList.remove("show"); setTimeout(()=>{overlay.style.display="none";},500); }
+        const el = document.getElementById(id);
+        if(show){ el.style.display="flex"; setTimeout(()=>{el.classList.add("show")},10); }
+        else{ el.classList.remove("show"); setTimeout(()=>{el.style.display="none"},500); }
     }
-    function closeInstruction() { toggleOverlay("instruction-overlay", false); }
-    function toggleArchive() {
-        const content = document.getElementById('archive-content');
-        content.style.display = (content.style.display === 'block') ? 'none' : 'block';
-    }
+    function toggleArchive() { const c = document.getElementById('archive-content'); c.style.display=(c.style.display==='block')?'none':'block'; }
+    function closeInstruction(){ toggleOverlay("instruction-overlay", false); }
+    
+    function generateXUrl(text) { return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text + "\n\n#恋愛グリッド #マトリックス占い")}&url=${encodeURIComponent(location.href)}`; }
+    function generateLineUrl(text) { return `https://social-plugins.line.me/lineit/share?text=${encodeURIComponent(text + "\n" + location.href)}`; }
     function generateCalendarUrl(title, desc) {
         const now = new Date();
-        const start = now.toISOString().replace(/-|:|\.\d\d\d/g, "");
-        const endObj = new Date(now.getTime() + 60 * 60 * 1000);
-        const end = endObj.toISOString().replace(/-|:|\.\d\d\d/g, "");
-        const cleanDesc = desc.replace(/<br>/g, "\n").replace(/<[^>]+>/g, ""); 
-        return `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent("【神羅万象・恋】" + title)}&dates=${start}/${end}&details=${encodeURIComponent(cleanDesc + "\n\n#神羅万象グリッド")}`;
+        const s = now.toISOString().replace(/-|:|\.\d\d\d/g, "");
+        const e = new Date(now.getTime()+60*60*1000).toISOString().replace(/-|:|\.\d\d\d/g, "");
+        const d = desc.replace(/<[^>]+>/g, "").replace(/\s+/g, " ");
+        return `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${s}/${e}&details=${encodeURIComponent(d)}`;
     }
 
-    // Step 1: 開始
-    function initiateDivination(themeJp, themeEn) {
-        currentThemeJp = themeJp; currentThemeEn = themeEn;
-        // タイトル表示
-        document.getElementById("instruction-theme-jp").innerText = themeJp;
-        document.getElementById("instruction-theme-en").innerText = themeEn;
+    /* Divination Logic */
+    let currentThemeJp="", currentThemeEn="";
+    
+    function initiateDivination(jp, en) {
+        currentThemeJp = jp; currentThemeEn = en;
+        document.getElementById("instruction-theme-jp").innerText = jp;
+        document.getElementById("instruction-theme-en").innerText = en;
         toggleOverlay("instruction-overlay", true);
     }
 
-    // Step 2: アップロード演出（動的テキスト＆光線）
     function startUploadSequence() {
         toggleOverlay("instruction-overlay", false);
-        setTimeout(() => {
+        setTimeout(()=>{
             toggleOverlay("upload-overlay", true);
-            const textEl = document.getElementById("upload-text-dynamic");
-            const messages = ["意識を無にしてください...", "対象への接続を確立...", "ノイズを排除中...", "アップロード完了。"];
-            let msgIndex = 0;
-            textEl.innerText = messages[0]; textEl.classList.add("fade-text");
-
-            const msgInterval = setInterval(() => {
-                msgIndex++;
-                if(msgIndex < messages.length) {
-                    textEl.classList.remove("fade-text"); void textEl.offsetWidth;
-                    textEl.innerText = messages[msgIndex]; textEl.classList.add("fade-text");
-                } else { clearInterval(msgInterval); }
+            const msgs = ["意識を無にしてください...", "対象への接続を確立...", "ノイズを排除中...", "アップロード完了。"];
+            let idx = 0; const txt = document.getElementById("upload-text-dynamic");
+            txt.innerText = msgs[0]; txt.classList.add("fade-text");
+            const t = setInterval(()=>{
+                idx++; if(idx < msgs.length){ txt.classList.remove("fade-text"); void txt.offsetWidth; txt.innerText = msgs[idx]; txt.classList.add("fade-text"); }
+                else { clearInterval(t); }
             }, 2500);
-
-            // 10秒後に横ライン演出→次へ
-            setTimeout(() => {
-                clearInterval(msgInterval);
-                toggleOverlay("upload-overlay", false);
-                
-                // 横ラインアニメーション
-                const beam = document.getElementById('horizon-scan');
-                beam.classList.remove('animate-scan'); void beam.offsetWidth; beam.classList.add('animate-scan');
-
-                setTimeout(() => { divination(currentThemeJp, currentThemeEn); }, 300);
-            }, 10000); 
+            setTimeout(()=>{
+                clearInterval(t); toggleOverlay("upload-overlay", false);
+                const scan = document.getElementById('horizon-scan');
+                scan.classList.remove('animate-scan'); void scan.offsetWidth; scan.classList.add('animate-scan');
+                setTimeout(()=>{ divination(); }, 300);
+            }, 10000);
         }, 300);
     }
 
-    // Step 3: ダウンロード
-    function divination(themeJp, themeEn) {
+    function divination() {
         const fill = document.getElementById("progress-fill");
-        toggleOverlay("loading-overlay", true);
-        fill.style.width = "0%";
-        let progress = 0;
-        const interval = setInterval(() => {
-            progress += Math.floor(Math.random() * 20);
-            if(progress > 100) progress = 100;
-            fill.style.width = `${progress}%`;
-            if(progress === 100) {
-                clearInterval(interval);
-                setTimeout(() => {
-                    toggleOverlay("loading-overlay", false);
-                    showResult(themeJp, themeEn);
-                }, 500);
-            }
+        toggleOverlay("loading-overlay", true); fill.style.width="0%";
+        let p = 0; const t = setInterval(()=>{
+            p += Math.floor(Math.random()*20); if(p>100) p=100; fill.style.width=p+"%";
+            if(p===100){ clearInterval(t); setTimeout(()=>{ toggleOverlay("loading-overlay", false); showResult(); }, 500); }
         }, 150);
     }
 
-    /* --- 恋愛用データセット --- */
+    /* History Logic */
+    function saveHistory(theme, resultTitle) {
+        const h = JSON.parse(localStorage.getItem("shinraHistory") || "[]");
+        h.unshift({ date: new Date().toLocaleString(), theme: "LOVE: "+theme, title: resultTitle });
+        if(h.length > 30) h.pop();
+        localStorage.setItem("shinraHistory", JSON.stringify(h));
+    }
+    function showHistory() {
+        const h = JSON.parse(localStorage.getItem("shinraHistory") || "[]");
+        const l = document.getElementById("history-list"); l.innerHTML = "";
+        if(h.length === 0) l.innerHTML = "<div style='color:#666; text-align:center;'>NO LOGS FOUND</div>";
+        else h.forEach(i => {
+            const d = document.createElement("div"); d.className = "history-item";
+            d.innerHTML = `<div style="color:#666;font-size:10px;">${i.date}</div><div class="history-theme">${i.theme}</div><div class="history-result">${i.title}</div>`;
+            l.appendChild(d);
+        });
+        toggleOverlay("history-modal", true);
+    }
+    function closeHistory() { toggleOverlay("history-modal", false); }
+
+    /* DATA SECTION: COMPLETE */
     const godsData = [
         { n: "国常立尊", r: "くにのとこたち", d: "【Kernel】<br>OSの中核。基盤確立。ここが揺らぐと全て落ちる。最強のセキュリティを敷け。" },
         { n: "豊雲野神", r: "とよくもの", d: "【Cloud】<br>クラウドの始祖。物理サーバーを捨てよ。可能性は空（くう）にある。" },
@@ -547,7 +493,6 @@
         { n: "高御産巣日神", r: "たかみむすび", d: "【Admin Guide】<br>上位存在からのドキュメント。直感という名の通知を見逃すな。" },
         { n: "天之御中主神", r: "あめのみなかぬし", d: "【Root User】<br>特権ID。全権限掌握。あなたがルールだ。コマンドを実行せよ。" }
     ];
-    // 恋愛用64卦
     const ichingDataLove = [
         { k: "乾為天", r: "けんいてん", d: "【Love Mode: BOLD】圧倒的な行動力。迷わずアプローチせよ。あなたがリードすることで関係は劇的に進展する。自信が鍵。" },
         { k: "坤為地", r: "こんいち", d: "【Love Mode: RECEPTIVE】受け身の美学。今は自分から動かず、相手の出方を待つこと。包容力が最高の魅力を生む。" },
@@ -616,10 +561,7 @@
     ];
 
     function makeRuby(kanji, kana) { return `<ruby>${kanji}<rt>${kana}</rt></ruby>`; }
-    function generateXUrl(text) { return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text + "\n\n#恋愛グリッド #マトリックス占い")}&url=${encodeURIComponent(location.href)}`; }
-    function generateLineUrl(text) { return `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(location.href)}&text=${encodeURIComponent(text)}`; }
 
-    // Step 4: 結果表示（演出強化＆サブ結果）
     function showResult(themeJp, themeEn) {
         const modal = document.getElementById("result-area");
         const box = document.getElementById("capture-target");
@@ -628,24 +570,17 @@
 
         box.className = "result-box"; 
         const primaryRoll = Math.floor(Math.random() * 81) + 1;
-        let subRoll; do { subRoll = Math.floor(Math.random() * 64); } while (subRoll === (primaryRoll - 1)); 
+        let subRoll; do { subRoll = Math.floor(Math.random() * 64); } while (subRoll === (primaryRoll - 1));
         const subItem = ichingDataLove[subRoll];
 
-        let htmlContent = ""; let shareText = ""; let calTitle = "";
+        let htmlContent = ""; let shareText = ""; let calTitle = ""; let logTitle = "";
 
         if (primaryRoll > 64) {
             const god = godsData[primaryRoll - 65];
             box.classList.add("mode-god");
             shareText = `【Love Code: GOD】${god.n}が降臨。恋の運命が強制的に書き換わりました。`;
-            calTitle = `【恋神意】${god.n}`;
-            htmlContent = `
-                <div class="symbol">⛩️</div>
-                <div class="name" style="color:var(--love-pink);">${makeRuby(god.n, god.r)}</div>
-                <div class="sub-name">ROOT ACCESS: GRANTED / ${themeEn}</div>
-                <div class="desc-box" style="border:2px solid var(--love-pink); color:var(--love-pink);">
-                    ${god.d}
-                </div>
-            `;
+            calTitle = `【恋神意】${god.n}`; logTitle = `★神意: ${god.n}`;
+            htmlContent = `<div class="symbol">⛩️</div><div class="name" style="color:var(--love-pink);">${makeRuby(god.n, god.r)}</div><div class="sub-name">ROOT ACCESS: GRANTED</div><div class="desc-box" style="border:2px solid var(--love-pink); color:var(--love-pink);">${god.d}</div>`;
         } else {
             const ichingItem = ichingDataLove[primaryRoll - 1];
             const overrideRoll = Math.floor(Math.random() * 64) + 1;
@@ -653,56 +588,23 @@
                 const god = godsData[Math.floor(Math.random() * 17)];
                 box.classList.add("mode-override");
                 shareText = `【Override】${ichingItem.k}の恋路に${god.n}が介入しました。`;
-                calTitle = `【恋神意介入】${ichingItem.k}×${god.n}`;
-                htmlContent = `
-                    <div class="symbol" style="color:var(--love-pink);">⚡️</div>
-                    <div class="name">${makeRuby(ichingItem.k, ichingItem.r)}</div>
-                    <div class="sub-name">LOG: HEXAGRM ${primaryRoll} / ${themeEn}</div>
-                    
-                    <div class="desc-box override-original">
-                        <strong>元の運命（Initial Fate）:</strong><br>
-                        ${ichingItem.d}
-                    </div>
-                    
-                    <div style="color:var(--love-pink); font-weight:bold; margin:20px 0; font-size:1.2em; animation:blink 0.2s infinite alternate;">
-                        ⚠️ WARNING: LOVE OVERRIDE DETECTED ⚠️
-                    </div>
-                    
-                    <div id="god-override-container" class="god-appear-container">
-                        <div class="desc-box" style="border:1px solid var(--love-pink); background:rgba(50,0,20,0.5);">
-                            <strong style="color:var(--love-pink); font-size:1.1em;">>> ${makeRuby(god.n, god.r)} Protocol Activated:</strong><br>
-                            ${god.d}
-                        </div>
-                    </div>
-                `;
-                setTimeout(() => { const godContainer = document.getElementById("god-override-container"); if (godContainer) godContainer.classList.add("show-override"); }, 1000);
+                calTitle = `【恋神意介入】${ichingItem.k}×${god.n}`; logTitle = `⚠️Override: ${ichingItem.k} -> ${god.n}`;
+                htmlContent = `<div class="symbol" style="color:var(--love-pink);">⚡️</div><div class="name">${makeRuby(ichingItem.k, ichingItem.r)}</div><div class="desc-box override-original"><strong>元の運命:</strong><br>${ichingItem.d}</div><div style="color:var(--love-pink); font-weight:bold; animation:blink 0.2s infinite alternate;">⚠️ LOVE OVERRIDE DETECTED ⚠️</div><div id="god-override-container" class="god-appear-container"><div class="desc-box" style="border:1px solid var(--love-pink); background:rgba(50,0,20,0.5);"><strong style="color:var(--love-pink);">>> ${makeRuby(god.n, god.r)} Protocol:</strong><br>${god.d}</div></div>`;
+                setTimeout(() => { const g = document.getElementById("god-override-container"); if (g) g.classList.add("show-override"); }, 1000);
             } else {
                 box.classList.add("mode-iching");
-                shareText = `【Result】${ichingItem.k}。${themeJp}の解析結果が出ました。`;
-                calTitle = `【恋結果】${ichingItem.k}`;
-                htmlContent = `
-                    <div class="symbol">☯</div>
-                    <div class="name">${makeRuby(ichingItem.k, ichingItem.r)}</div>
-                    <div class="sub-name">STATUS: ${themeEn}</div>
-                    <div class="desc-box">
-                        ${ichingItem.d}
-                    </div>
-                `;
+                shareText = `【Result】${ichingItem.k}。${currentThemeJp}の解析結果が出ました。`;
+                calTitle = `【恋結果】${ichingItem.k}`; logTitle = `現象: ${ichingItem.k}`;
+                htmlContent = `<div class="symbol">☯</div><div class="name">${makeRuby(ichingItem.k, ichingItem.r)}</div><div class="sub-name">STATUS: ${currentThemeEn}</div><div class="desc-box">${ichingItem.d}</div>`;
             }
         }
-
-        htmlContent += `
-            <div class="sub-result-area">
-                <div class="sub-result-title">> 潜在的な可能性（Sub Route）を検知:</div>
-                【${subItem.k}】 ${subItem.d.substring(subItem.d.indexOf("】")+1)}
-            </div>
-        `;
-
+        saveHistory(currentThemeJp, logTitle);
+        htmlContent += `<div class="sub-result-area"><div class="sub-result-title">> 潜在的な可能性（Sub Route）を検知:</div>【${subItem.k}】 ${subItem.d.substring(subItem.d.indexOf("】")+1)}</div>`;
+        
         content.innerHTML = htmlContent;
         document.getElementById("btn-x").href = generateXUrl(shareText);
         document.getElementById("btn-line").href = generateLineUrl(shareText);
         document.getElementById("btn-cal").href = generateCalendarUrl(calTitle, content.innerText);
-        
         toggleOverlay("result-area", true);
         setTimeout(() => { actions.style.display = "flex"; }, 50);
     }
