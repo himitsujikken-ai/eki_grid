@@ -7,49 +7,169 @@
 <meta name="description" content="自分という宇宙を読み解く、現代の神羅針盤。">
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <style>
-    /* デザインテーマ: The Matrix Grid */
-    :root { --matrix-green: #0F0; --matrix-dark: #003300; --neon-cyan: #00f2ff; --ginza-gold: #c5a059; --text-color: #e0e0e0; }
-    body { font-family: "Hiragino Mincho ProN", "Yu Mincho", serif; background: #000; margin: 0; padding: 0; color: var(--text-color); display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; -webkit-text-size-adjust: 100%; }
-    #matrix-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.8; }
-    header { width: 100%; padding: 30px 20px 10px; text-align: center; background: linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.8) 100%); z-index: 10; }
-    h1 { font-size: 26px; color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); margin: 0; letter-spacing: 0.1em; font-family: monospace; }
+    /* --- デザインテーマ：The Matrix Grid --- */
+    :root {
+        --matrix-green: #0F0;
+        --matrix-dark: #003300;
+        --neon-cyan: #00f2ff;
+        --ginza-gold: #c5a059;
+        --text-color: #e0e0e0;
+    }
+
+    body {
+        font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+        background: #000;
+        margin: 0; padding: 0;
+        color: var(--text-color);
+        display: flex; flex-direction: column; align-items: center;
+        min-height: 100vh;
+        overflow-x: hidden;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    /* マトリックス背景 */
+    #matrix-canvas {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        z-index: -1; opacity: 0.8;
+    }
+
+    /* --- ヘッダー --- */
+    header {
+        width: 100%; padding: 30px 20px 10px; text-align: center;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.8) 100%);
+        z-index: 10;
+    }
+
+    h1 {
+        font-size: 26px; color: var(--matrix-green);
+        text-shadow: 0 0 10px var(--matrix-green);
+        margin: 0; letter-spacing: 0.1em; font-family: monospace;
+    }
     .subtitle { font-size: 10px; color: #fff; letter-spacing: 0.3em; margin-top: 5px; }
-    .intro-explanation { width: 90%; max-width: 600px; margin: 20px auto; border: 1px solid var(--matrix-dark); background: rgba(0, 20, 0, 0.7); border-left: 3px solid var(--matrix-green); padding: 15px; box-sizing: border-box; text-align: left; font-size: 13px; line-height: 1.8; color: #cfcfcf; box-shadow: 0 0 15px rgba(0, 255, 0, 0.05); }
-    .intro-title { color: var(--matrix-green); font-weight: bold; font-size: 16px; margin-bottom: 5px; border-bottom: 1px dashed var(--matrix-dark); padding-bottom: 5px; }
+
+    /* --- TOP解説エリア --- */
+    .intro-explanation {
+        width: 90%; max-width: 600px; margin: 20px auto;
+        border: 1px solid var(--matrix-dark);
+        background: rgba(0, 20, 0, 0.7);
+        border-left: 3px solid var(--matrix-green);
+        padding: 15px; box-sizing: border-box;
+        text-align: left; font-size: 13px; line-height: 1.8;
+        color: #cfcfcf;
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.05);
+    }
+    .intro-title {
+        color: var(--matrix-green); font-weight: bold; font-size: 16px;
+        margin-bottom: 5px; border-bottom: 1px dashed var(--matrix-dark); padding-bottom: 5px;
+    }
     .intro-sub { font-size: 11px; opacity: 0.8; display: block; margin-bottom: 10px; }
-    .toggle-btn { display: block; width: 100%; text-align: center; background: rgba(0, 50, 0, 0.5); color: var(--matrix-green); border: 1px solid var(--matrix-dark); padding: 8px; margin-top: 10px; cursor: pointer; font-size: 12px; font-family: monospace; transition: 0.3s; }
+    
+    .toggle-btn {
+        display: block; width: 100%; text-align: center;
+        background: rgba(0, 50, 0, 0.5); color: var(--matrix-green);
+        border: 1px solid var(--matrix-dark);
+        padding: 8px; margin-top: 10px; cursor: pointer;
+        font-size: 12px; font-family: monospace; transition: 0.3s;
+    }
     .toggle-btn:hover { background: rgba(0, 100, 0, 0.5); }
+
     #hidden-desc { display: none; margin-top: 15px; border-top: 1px dashed var(--matrix-dark); padding-top: 15px; }
     #hidden-desc h4 { color: var(--ginza-gold); margin: 20px 0 10px; font-size: 14px; border-left: 2px solid var(--ginza-gold); padding-left: 8px; }
-    .magic-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; width: 120px; margin: 10px auto; background: var(--matrix-green); border: 2px solid var(--matrix-green); }
-    .grid-cell { background: #000; color: var(--matrix-green); height: 40px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-family: monospace; font-size: 16px; }
-    .container { width: 90%; max-width: 450px; padding-bottom: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; z-index: 10; margin-top: 10px; }
-    .menu-btn { position: relative; width: 100%; padding: 25px 10px; background: rgba(0, 30, 0, 0.6); color: var(--matrix-green); border: 1px solid rgba(0, 255, 0, 0.3); border-radius: 2px; font-family: monospace; font-size: 14px; letter-spacing: 0.05em; cursor: pointer; transition: 0.2s; box-shadow: 0 0 5px rgba(0, 255, 0, 0.1); }
+    
+    /* 3x3 魔方陣グリッド */
+    .magic-grid {
+        display: grid; grid-template-columns: repeat(3, 1fr);
+        gap: 2px; width: 120px; margin: 10px auto;
+        background: var(--matrix-green); border: 2px solid var(--matrix-green);
+    }
+    .grid-cell {
+        background: #000; color: var(--matrix-green);
+        height: 40px; display: flex; align-items: center; justify-content: center;
+        font-weight: bold; font-family: monospace; font-size: 16px;
+    }
+    
+    /* --- メニュー --- */
+    .container {
+        width: 90%; max-width: 450px; padding-bottom: 20px;
+        display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+        z-index: 10; margin-top: 10px;
+    }
+    .menu-btn {
+        position: relative; width: 100%; padding: 25px 10px;
+        background: rgba(0, 30, 0, 0.6); color: var(--matrix-green);
+        border: 1px solid rgba(0, 255, 0, 0.3); border-radius: 2px;
+        font-family: monospace; font-size: 14px; letter-spacing: 0.05em;
+        cursor: pointer; transition: 0.2s;
+        box-shadow: 0 0 5px rgba(0, 255, 0, 0.1);
+    }
     .menu-btn:active { transform: scale(0.96); background: rgba(0, 255, 0, 0.1); }
     .menu-btn span { display: block; font-size: 10px; opacity: 0.7; margin-top: 5px; color: #fff; }
     .menu-btn.full-width { grid-column: 1 / 3; border-color: var(--ginza-gold); color: var(--ginza-gold); }
-    .btn-history { grid-column: 1 / 3; background: rgba(0, 20, 50, 0.6); color: #aaa; border: 1px dashed #555; font-size: 12px; padding: 15px; }
-    .system-archive { width: 90%; max-width: 600px; margin: 20px auto 80px; border-top: 2px solid var(--matrix-dark); padding-top: 20px; z-index: 10; text-align: center; }
-    .archive-header { display: inline-block; color: var(--matrix-dark); cursor: pointer; font-family: monospace; font-size: 12px; letter-spacing: 2px; transition: 0.3s; padding: 10px 20px; border: 1px solid transparent; background: rgba(0,20,0,0.5); }
+
+    /* --- フッター：詳細アーカイブ --- */
+    .system-archive {
+        width: 90%; max-width: 600px; margin: 20px auto 80px;
+        border-top: 2px solid var(--matrix-dark);
+        padding-top: 20px; z-index: 10;
+        text-align: center;
+    }
+    .archive-header {
+        display: inline-block;
+        color: var(--matrix-dark); cursor: pointer;
+        font-family: monospace; font-size: 12px; letter-spacing: 2px;
+        transition: 0.3s; padding: 10px 20px; border: 1px solid transparent;
+        background: rgba(0,20,0,0.5);
+    }
     .archive-header:hover { color: var(--matrix-green); border: 1px dashed var(--matrix-green); background: #000; }
-    #archive-content { display: none; background: rgba(0, 10, 0, 0.95); border: 1px solid var(--matrix-green); box-shadow: 0 0 20px rgba(0, 255, 0, 0.1); padding: 25px; margin-top: 15px; color: #bbb; font-size: 13px; line-height: 1.9; text-align: left; }
-    #archive-content h3 { color: var(--matrix-green); font-size: 16px; border-bottom: 1px solid var(--matrix-green); padding-bottom: 5px; margin-top: 40px; margin-bottom: 15px; }
+    
+    #archive-content {
+        display: none;
+        background: rgba(0, 10, 0, 0.95);
+        border: 1px solid var(--matrix-green);
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.1);
+        padding: 25px; margin-top: 15px;
+        color: #bbb; font-size: 13px; line-height: 1.9; text-align: left;
+    }
+    #archive-content h3 { 
+        color: var(--matrix-green); font-size: 16px; 
+        border-bottom: 1px solid var(--matrix-green); 
+        padding-bottom: 5px; margin-top: 40px; margin-bottom: 15px;
+    }
     #archive-content h3:first-child { margin-top: 0; }
-    #archive-content h4 { color: var(--ginza-gold); font-size: 14px; margin-top: 25px; margin-bottom: 10px; border-left: 3px solid var(--ginza-gold); padding-left: 10px; }
+    #archive-content h4 { 
+        color: var(--ginza-gold); font-size: 14px; 
+        margin-top: 25px; margin-bottom: 10px; 
+        border-left: 3px solid var(--ginza-gold); padding-left: 10px;
+    }
     #archive-content p { margin-bottom: 15px; text-align: justify; }
     #archive-content ul { padding-left: 1.5em; margin-bottom: 15px; }
     #archive-content li { margin-bottom: 5px; }
-    .archive-intro { font-family: serif; font-style: italic; color: #fff; margin-bottom: 30px; text-align: center; font-size: 14px; border: 1px solid #333; padding: 15px; }
-    .overlay-base { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.95); flex-direction: column; justify-content: center; align-items: center; backdrop-filter: blur(5px); opacity: 0; transition: opacity 0.5s ease; padding: 20px; box-sizing: border-box; font-family: monospace; color: var(--matrix-green); z-index: 2000; }
+    .archive-intro { 
+        font-family: serif; font-style: italic; color: #fff; 
+        margin-bottom: 30px; text-align: center; font-size: 14px; 
+        border: 1px solid #333; padding: 15px;
+    }
+
+    /* --- オーバーレイ共通 --- */
+    .overlay-base {
+        display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background-color: rgba(0, 0, 0, 0.95);
+        flex-direction: column; justify-content: center; align-items: center;
+        backdrop-filter: blur(5px); opacity: 0; transition: opacity 0.5s ease;
+        padding: 20px; box-sizing: border-box;
+        font-family: monospace; color: var(--matrix-green); z-index: 2000;
+    }
     .overlay-base.show { opacity: 1; }
-    #history-modal { z-index: 2500; justify-content: flex-start; padding-top: 80px; }
-    .history-list { width: 100%; max-width: 500px; max-height: 70vh; overflow-y: auto; border: 1px solid var(--matrix-dark); background: rgba(0,20,0,0.8); padding: 10px; }
-    .history-item { border-bottom: 1px dashed #333; padding: 10px; text-align: left; font-size: 12px; }
-    .history-date { color: #666; font-size: 10px; margin-bottom: 3px; }
-    .history-theme { color: var(--ginza-gold); font-weight: bold; }
-    .history-result { color: var(--matrix-green); margin-top: 5px; font-size: 14px; }
+
+    /* インストラクション */
     #instruction-overlay { z-index: 1500; }
-    .instruction-box { width: 100%; max-width: 400px; padding: 30px 25px; border-radius: 4px; text-align: center; border: 2px solid var(--matrix-green); background: rgba(0, 20, 0, 0.8); box-shadow: 0 0 20px rgba(0, 255, 0, 0.2); animation: boxPulse 2s infinite alternate; }
+    .instruction-box {
+        width: 100%; max-width: 400px; padding: 30px 25px;
+        border-radius: 4px; text-align: center;
+        border: 2px solid var(--matrix-green); background: rgba(0, 20, 0, 0.8);
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+        animation: boxPulse 2s infinite alternate;
+    }
     @keyframes boxPulse { from { box-shadow: 0 0 10px rgba(0, 255, 0, 0.1); } to { box-shadow: 0 0 30px rgba(0, 255, 0, 0.4); } }
     .selected-theme-display { border-bottom: 1px solid var(--matrix-green); padding-bottom: 10px; margin-bottom: 20px; }
     #instruction-theme-jp { font-size: 20px; font-weight: bold; color: var(--matrix-green); text-shadow: 0 0 5px var(--matrix-green); }
@@ -57,42 +177,120 @@
     .instruction-icon { font-size: 50px; margin-bottom: 20px; animation: float 2s infinite ease-in-out; }
     .instruction-text { font-size: 18px; line-height: 2; margin-bottom: 30px; color: var(--text-color); font-family: monospace;}
     .highlight-text { color: var(--matrix-green); font-weight: bold; font-size: 24px; }
+
+    /* アップロード演出 */
     #upload-overlay { z-index: 2100; }
-    .upload-stream { position: absolute; bottom: 0; left: 50%; width: 2px; height: 100%; background: linear-gradient(to top, transparent, var(--matrix-green), transparent); animation: uploadFlow 1.5s linear infinite; opacity: 0.7; }
-    .stream-1 { margin-left: -20px; animation-delay: 0.1s; height: 80%; } .stream-2 { margin-left: 0px; animation-duration: 2s; } .stream-3 { margin-left: 20px; animation-delay: 0.3s; height: 90%; }
-    @keyframes uploadFlow { 0% { transform: translateY(100%) scaleY(0.5); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(-100%) scaleY(1.5); opacity: 0; } }
+    .upload-stream {
+        position: absolute; bottom: 0; left: 50%; width: 2px; height: 100%;
+        background: linear-gradient(to top, transparent, var(--matrix-green), transparent);
+        animation: uploadFlow 1.5s linear infinite; opacity: 0.7;
+    }
+    .stream-1 { margin-left: -20px; animation-delay: 0.1s; height: 80%; }
+    .stream-2 { margin-left: 0px; animation-duration: 2s; }
+    .stream-3 { margin-left: 20px; animation-delay: 0.3s; height: 90%; }
+    @keyframes uploadFlow {
+        0% { transform: translateY(100%) scaleY(0.5); opacity: 0; }
+        50% { opacity: 1; }
+        100% { transform: translateY(-100%) scaleY(1.5); opacity: 0; }
+    }
     .upload-text-container { height: 60px; display: flex; justify-content: center; align-items: center; z-index: 10; }
     .upload-text { font-size: 16px; letter-spacing: 2px; color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); }
     .fade-text { animation: textFade 2.8s linear forwards; }
-    @keyframes textFade { 0% { opacity: 0; transform: translateY(10px); } 20% { opacity: 1; transform: translateY(0); } 80% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-10px); } }
-    #horizon-scan { position: fixed; top: 50%; left: 0; width: 100%; height: 2px; background: #fff; box-shadow: 0 0 20px #fff, 0 0 40px var(--neon-cyan); z-index: 2150; transform: scaleX(0); opacity: 0; pointer-events: none; }
+    @keyframes textFade {
+        0% { opacity: 0; transform: translateY(10px); }
+        20% { opacity: 1; transform: translateY(0); }
+        80% { opacity: 1; transform: translateY(0); }
+        100% { opacity: 0; transform: translateY(-10px); }
+    }
+
+    /* 横ライン光線演出 */
+    #horizon-scan {
+        position: fixed; top: 50%; left: 0; width: 100%; height: 2px;
+        background: #fff;
+        box-shadow: 0 0 20px #fff, 0 0 40px var(--neon-cyan);
+        z-index: 2150; /* アップロードより上、ローディングより下 */
+        transform: scaleX(0); opacity: 0;
+        pointer-events: none;
+    }
     .animate-scan { animation: horizonScan 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-    @keyframes horizonScan { 0% { transform: scaleX(0); opacity: 1; } 50% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
+    @keyframes horizonScan {
+        0% { transform: scaleX(0); opacity: 1; }
+        50% { transform: scaleX(1); opacity: 1; }
+        100% { transform: scaleX(1); opacity: 0; }
+    }
+
+    /* ダウンロード */
     #loading-overlay { z-index: 2200; }
     .progress-bar { width: 200px; height: 2px; background: #003300; margin-top: 10px; }
     .progress-fill { width: 0%; height: 100%; background: var(--matrix-green); transition: width 0.2s; }
+
+    /* 結果モーダル */
     #result-area { z-index: 1000; background-color: rgba(0, 0, 0, 0.9); }
-    .result-box { width: 100%; max-width: 400px; padding: 40px 20px; border-radius: 4px; text-align: center; position: relative; box-shadow: 0 0 30px rgba(0, 255, 0, 0.2); max-height: 70vh; overflow-y: auto; border: 1px solid var(--matrix-green); background: #000; transform: scale(0.9); transition: transform 0.4s; }
+    .result-box {
+        width: 100%; max-width: 400px; padding: 40px 20px;
+        border-radius: 4px; text-align: center; position: relative;
+        box-shadow: 0 0 30px rgba(0, 255, 0, 0.2);
+        max-height: 70vh; overflow-y: auto;
+        border: 1px solid var(--matrix-green); background: #000;
+        transform: scale(0.9); transition: transform 0.4s;
+    }
     #result-area.show .result-box { transform: scale(1); }
+    
+    /* 新設：結果画面のテーマヘッダー */
+    .result-theme-header {
+        font-size: 18px; color: var(--ginza-gold); font-weight: bold;
+        border-bottom: 1px solid var(--ginza-gold);
+        padding-bottom: 5px; margin-bottom: 20px;
+        text-shadow: 0 0 5px rgba(197, 160, 89, 0.5);
+    }
+
+    /* モード別デザイン */
     .mode-iching { border: 1px solid var(--matrix-green); color: var(--matrix-green); }
     .mode-iching .symbol { color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); font-size: 80px; }
-    .mode-god, .mode-override { border: 2px solid #FFD700; background: linear-gradient(135deg, #1a1a00, #000); box-shadow: 0 0 60px rgba(255, 215, 0, 0.3); animation: borderPulse 2s infinite; }
+    .mode-god, .mode-override {
+        border: 2px solid #FFD700; background: linear-gradient(135deg, #1a1a00, #000);
+        box-shadow: 0 0 60px rgba(255, 215, 0, 0.3); animation: borderPulse 2s infinite;
+    }
     @keyframes borderPulse { 0% { border-color: #FFD700; } 50% { border-color: #fff; } 100% { border-color: #FFD700; } }
     @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
     @keyframes blink { from { opacity: 1; } to { opacity: 0.5; } }
+
     .symbol { display: block; margin-bottom: 10px; line-height: 1; }
     .name { font-size: 28px; font-weight: bold; margin: 10px 0; letter-spacing: 0.1em; }
     .sub-name { font-size: 11px; opacity: 0.7; letter-spacing: 1px; margin-bottom: 20px; font-family: monospace; }
-    .desc-box { text-align: left; font-size: 15px; line-height: 1.8; padding: 20px; background: rgba(0, 50, 0, 0.2); border: 1px solid rgba(0, 255, 0, 0.2); border-radius: 4px; margin-top: 10px; }
-    .override-original { opacity: 0.6; text-decoration: line-through double red; font-size: 12px; background: rgba(50,0,0,0.3); border: 1px dashed red; padding: 10px; margin-bottom: 15px; position: relative; }
-    .override-original::after { content: "【DELETED DATA】"; position: absolute; top: -10px; right: 5px; background: red; color: black; font-size: 10px; padding: 2px 5px; font-weight: bold; }
+    .desc-box {
+        text-align: left; font-size: 15px; line-height: 1.8;
+        padding: 20px; background: rgba(0, 50, 0, 0.2);
+        border: 1px solid rgba(0, 255, 0, 0.2);
+        border-radius: 4px; margin-top: 10px;
+    }
+
+    /* オーバーライド演出 */
+    .override-original {
+        opacity: 0.6; text-decoration: line-through double red; font-size: 12px;
+        background: rgba(50,0,0,0.3); border: 1px dashed red; padding: 10px; margin-bottom: 15px; position: relative;
+    }
+    .override-original::after {
+        content: "【DELETED DATA】"; position: absolute; top: -10px; right: 5px;
+        background: red; color: black; font-size: 10px; padding: 2px 5px; font-weight: bold;
+    }
     .god-appear-container { opacity: 0; transform: scale(0.8) translateY(20px); transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
     .god-appear-container.show-override { opacity: 1; transform: scale(1) translateY(0); }
-    .sub-result-area { margin-top: 25px; padding-top: 15px; border-top: 1px dashed rgba(0,255,0,0.3); text-align: left; font-size: 12px; color: rgba(224, 224, 224, 0.8); }
+
+    .sub-result-area {
+        margin-top: 25px; padding-top: 15px; border-top: 1px dashed rgba(0,255,0,0.3);
+        text-align: left; font-size: 12px; color: rgba(224, 224, 224, 0.8);
+    }
     .sub-result-title { font-weight: bold; margin-bottom: 5px; color: var(--matrix-green); }
+
+    /* アクションボタン */
     .action-area { width: 100%; max-width: 400px; margin-top: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1001; }
-    .btn-row { display: flex; gap: 10px; } .btn-row .action-btn { flex: 1; }
-    .action-btn { padding: 15px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-size: 14px; font-family: monospace; }
+    .btn-row { display: flex; gap: 10px; }
+    .btn-row .action-btn { flex: 1; }
+    .action-btn {
+        padding: 15px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;
+        display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-size: 14px; font-family: monospace;
+    }
     .btn-share { background: var(--matrix-green); color: #000; box-shadow: 0 0 10px var(--matrix-green); }
     .btn-cal { background: #003366; color: #fff; border: 1px solid #0055aa; box-shadow: 0 0 10px #003366; }
     .btn-x { background: #000; color: #fff; border: 1px solid #fff; }
@@ -107,10 +305,13 @@
 
 <header>
     <h1>神羅万象グリッド<div class="subtitle">SYSTEM: SHINRA-BANSHO</div></h1>
+    
     <div class="intro-explanation">
         <div class="intro-title">森羅万象GRID</div>
         <span class="intro-sub">自分という宇宙を読み解く、現代の“神羅針盤”</span>
-        <p>世界は、縦と横の糸によって編まれています。縦は「意図と流れ」。横は「関係と循環」。そしてその中心には、必ず“あなた”がいます。</p>
+        <p>世界は、縦と横の糸によって編まれています。森羅万象GRIDは、<strong>「易（64の現象）」</strong>と<strong>「神代十七代（17の神意）」</strong>を融合させた、独自のアルゴリズムです。</p>
+        <p>古代日本が大切にしてきた数霊・魔方陣・陰陽の調和原理をもとに、あなた自身の“位置”を読み解くために生まれました。</p>
+        
         <button id="toggle-desc-btn" class="toggle-btn" onclick="toggleDescription()">▼ より詳細の解説を確認する...</button>
         <div id="hidden-desc">
             <h4>■数霊天盤</h4>
@@ -122,21 +323,34 @@
             <p>右表の左上ブロックの9数を丸めると、すべての和が調和する配置数になります。</p>
             <h4>■占いではなく、“位置調整”</h4>
             <p>ここで扱うのは、未来を当てるための占いではありません。本来の占術が持っていた、「自分と世界の関係性を整えるための羅針盤」という役割を取り戻したものです。</p>
+            
+            <button class="action-btn" style="margin-top:15px; background:transparent; border:1px solid var(--ginza-gold); color:var(--ginza-gold); font-size:12px;" onclick="jumpToArchive()">
+                ▼ システム設計・理念（アーカイブ）へ移動
+            </button>
         </div>
     </div>
 </header>
 
 <div class="container">
-    <button class="menu-btn" onclick="initiateDivination('今の現在地', 'Status Check')">現在地の特定<span>> Check Status</span></button>
-    <button class="menu-btn" onclick="initiateDivination('未来の分岐点', 'Future Branch')">未来の分岐点<span>> Scan Future</span></button>
-    <button class="menu-btn" onclick="initiateDivination('人間関係のバグ', 'Relation Debug')">関係性のバグ<span>> Debug Relations</span></button>
-    <button class="menu-btn" onclick="initiateDivination('金脈の所在', 'Gold Vein')">金脈の所在<span>> Scan Economy</span></button>
-    <button class="menu-btn full-width" onclick="initiateDivination('隠された真実', 'Deep Dive')">深層ダイブ（隠された真実）<span>> Execute Deep Dive</span></button>
-    <button class="menu-btn btn-history" onclick="showHistory()">📜 過去の観測ログ（履歴）を見る</button>
+    <button class="menu-btn" onclick="initiateDivination('今の現在地', 'Status Check')">
+        現在地の特定<span>> Check Status</span>
+    </button>
+    <button class="menu-btn" onclick="initiateDivination('未来の分岐点', 'Future Branch')">
+        未来の分岐点<span>> Scan Future</span>
+    </button>
+    <button class="menu-btn" onclick="initiateDivination('人間関係のバグ', 'Relation Debug')">
+        関係性のバグ<span>> Debug Relations</span>
+    </button>
+    <button class="menu-btn" onclick="initiateDivination('金脈の所在', 'Gold Vein')">
+        金脈の所在<span>> Scan Economy</span>
+    </button>
+    <button class="menu-btn full-width" onclick="initiateDivination('隠された真実', 'Deep Dive')">
+        深層ダイブ（隠された真実）<span>> Execute Deep Dive</span>
+    </button>
     <button class="btn-to-love" onclick="location.href='love.html'">> 恋愛アルゴリズム解析へ移動</button>
 </div>
 
-<footer class="system-archive">
+<footer class="system-archive" id="system-archive-section">
     <div class="archive-header" onclick="toggleArchive()">
         [ SYSTEM ARCHIVES : DETAILED_LOGS ]<br>▼ ACCESS DATA
     </div>
@@ -145,9 +359,12 @@
             ―― 日ノ本哲理 × 数霊 × Technology ――<br>
             見えない構造から生まれた、現代の神羅針盤
         </div>
+
         <h3>1. すべては“見えない構造”から始まった</h3>
         <p>管理人の理念、彼は常にこう語ってきた。<br>「世界は縦と横の糸で編まれ、生命も社会も自然も同じ“循環の設計図”を持つ」</p>
         <p>縄文から続く“循環文明”への共鳴。日本が持つ“横の叡智”——菌、森、里山、共同体。<br>そして宇宙に通じる“縦の叡智”——数霊、波、意図、中心性。</p>
+        <p>これらを統合するために彼は長く探求してきた。<br>その旅の中で出会ったのが、九宮(きゅうぐう)・魔方陣の数理。</p>
+
         <h3>2. 魔法陣が教えてくれた「世界の背骨」</h3>
         <div class="magic-grid" style="transform:scale(0.8); margin:10px auto;">
             <div class="grid-cell">4</div><div class="grid-cell">9</div><div class="grid-cell">2</div>
@@ -155,22 +372,55 @@
             <div class="grid-cell">8</div><div class="grid-cell">1</div><div class="grid-cell">6</div>
         </div>
         <p>魔法陣から読み取れる本質は、次の一点に集約される。<br><strong>“世界の構造は、1~9の数霊で説明できる”</strong></p>
+        <ul style="list-style:none; padding-left:0; font-size:12px;">
+            <li>> 真ん中に置かれた「5」が結界の中心</li>
+            <li>> 周囲が“8方位”として展開</li>
+            <li>> すべての列・行・斜めが同じ数(=調和値)で揃う</li>
+        </ul>
+        <p>そのままの構造である。</p>
+
         <h3>3. “占い”は本来、未来予測ではない</h3>
-        <p>日本の古い占術は、決して「当てもの」ではなかった。<br>「いま自分が世界のどの位置にいて、どちらへ向かえば調和が戻るか」を見せる羅針盤だった。</p>
+        <h4>大自然の調和値を読む学問だった</h4>
+        <p>日本の古い占術は、決して「当てもの」ではなかった。<br>ここに示されている数霊・魔方陣=循環のマップは、「いま自分が世界のどの位置にいて、どちらへ向かえば調和が戻るか」を見せる羅針盤だった。</p>
+        <p>つまり、占いとは宇宙の座標合わせである。<br>彼が作ったサイト 森羅万象GRIDは、その古代的な役割を現代のUI/UXに翻訳した存在だと言える。</p>
+
         <h3>4. なぜこのサイトを作ったのか?</h3>
-        <p>森羅万象GRIDは、単なる占いサイトではない。<br><strong>◎森羅万象GRID = 「個人が、世界との位置関係を再調整する装置」</strong></p>
+        <h4>“行動の羅針盤”を現代に取り戻すため</h4>
+        <p>森羅万象GRIDは、単なる占いサイトではない。<br>彼の哲理に照らすと、次のように定義できる。<br><strong>◎森羅万象GRID = 「個人が、世界との位置関係を再調整する装置」</strong></p>
+        <ul>
+            <li>九宮が示す「中心と八方」の構造</li>
+            <li>数霊が語る 「1~9の役割」</li>
+            <li>陰陽で説明される「受と発」</li>
+            <li>行動心理学で読み解く「人の運動性」</li>
+            <li>量子的揺らぎと選択のカーブ</li>
+        </ul>
+        <p>これら全部を、ひとつの“簡潔なUI”に落とし込んだ。「人間の内的な“地図”もまた、整地すべき領域である」こういう深い思想に基づいている。</p>
+
         <h3>5. このサイトを形づくった“設計原理”</h3>
         <h4>① 中心 = 5 (ゼロ意識/根源)</h4>
         <p>・ サイトのトップページが極力ミニマルなのは“中心性”の表現<br>・ すべてを削ぎ、ユーザーが「余白=無」に触れるように設計</p>
+        <h4>② 八方 = 行動タイプ・資質の分岐</h4>
+        <p>・ あなたが長く扱ってきた“行動心理学・陰陽五行・九性”を魔方陣の八方に重ね再構築</p>
         <h4>③ 縦軸 = 数霊 (1~9)</h4>
         <p>・ ユーザーの運動方向・変化点を“数の位相”で解析<br>・ 書籍の「九の合計=81の循環性」をバックエンドに採用</p>
-        <h3>6. このサイトが示す未来</h3>
+        <h4>◎ 横軸 = 関係性 (相生・相剋)</h4>
+        <p>・ 恋愛・人間関係の相性は全て“横の意図”として処理<br>・ 数字の和・差・調和値で判定するアルゴリズムに集約</p>
+        <p><strong>全体像 = “未来のための日本発の叡智体系”</strong><br>・ 日ノ本哲理が描く「統合知」<br>= 行動×感情×数×自然×宇宙のひとつ化<br>森羅万象GRIDは、この体系の最初の社会実装と言える。</p>
+
+        <h3>6. なぜ今、このサイトが必要なのか?</h3>
+        <p>彼がずっと語ってきたように、日本はこれから<br>●土地・食 ●人間関係・地域コミュニティ ●精神性<br>すべての軸で“再統合のフェーズ”に入る。</p>
+        <p>森羅万象GRIDは、その入口として、「まず自分という“ひとつの宇宙”を整える」ここから始めるためのツールである。</p>
+
+        <h3>7. このサイトが示す未来</h3>
         <ul style="list-style:none; padding-left:0; text-align:center;">
             <li>●自分の中心が整う<br>↓</li>
             <li>●相手との関係が整う<br>↓</li>
             <li>●家族や職場が整う<br>↓</li>
+            <li>●地域や土地が蘇る<br>↓</li>
+            <li>●日本全体が再生する<br>↓</li>
             <li>●地球が調和へ向かう</li>
         </ul>
+        <p>これはまさに、彼が、そしてもしかすると、あなたが掲げる「地球という“財”を守る」ための内なる革命の第一歩。</p>
         <p style="text-align:center; color:var(--matrix-green); font-weight:bold; margin-top:30px;">
             森羅万象GRIDは、あなたの哲理と書籍の数理が結晶化した<br>“現代の神羅針盤"である。
         </p>
@@ -185,21 +435,25 @@
             <div id="instruction-theme-jp"></div>
             <div id="instruction-theme-en"></div>
         </div>
-        <div class="instruction-icon">🧠</div>
-        <p class="instruction-text">神経を研ぎ澄ませ。<br>知りたいことを<br><span class="highlight-text">三回</span>、心の中で唱えよ。</p>
-        <button class="action-btn btn-share" onclick="startUploadSequence()">唱えた。接続を開始する。</button>
-        <button class="action-btn btn-close" style="margin-top:10px; border:1px solid var(--matrix-green); color:var(--matrix-green);" onclick="closeInstruction()">← メニューに戻る</button>
+        <div class="instruction-icon" style="animation: float 3s ease-in-out infinite;">🧠</div>
+        <p class="instruction-text">
+            神経を研ぎ澄ませ。<br>
+            知りたいことを<br>
+            <span class="highlight-text">三回</span>、心の中で唱えよ。
+        </p>
+        <button id="proceed-btn" class="action-btn btn-share" onclick="startUploadSequence()">
+            唱えた。接続を開始する。
+        </button>
+        <button class="action-btn btn-close" style="margin-top:10px; background:transparent; border:1px solid var(--matrix-green); color:var(--matrix-green);" onclick="closeInstruction()">
+            ← メニューに戻る
+        </button>
     </div>
 </div>
 
-<div id="history-modal" class="overlay-base">
-    <h2 style="color:var(--matrix-green); border-bottom:1px solid var(--matrix-green); width:100%; max-width:500px; padding-bottom:10px;">> ACCESS LOGS</h2>
-    <div id="history-list" class="history-list"></div>
-    <button class="action-btn btn-close" style="margin-top:20px;" onclick="closeHistory()">Close Logs</button>
-</div>
-
 <div id="upload-overlay" class="overlay-base">
-    <div class="upload-stream stream-1"></div><div class="upload-stream stream-2"></div><div class="upload-stream stream-3"></div>
+    <div class="upload-stream stream-1"></div>
+    <div class="upload-stream stream-2"></div>
+    <div class="upload-stream stream-3"></div>
     <div class="upload-text-container">
         <div id="upload-text-dynamic" class="upload-text">INITIALIZING...</div>
     </div>
@@ -230,54 +484,69 @@
 </div>
 
 <script>
-    /* Matrix Rain */
-    const canvas = document.getElementById('matrix-canvas'); const ctx = canvas.getContext('2d');
+    /* --- Matrix Rain Effect --- */
+    const canvas = document.getElementById('matrix-canvas');
+    const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ';
+    const katakana = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ';
+    const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; const nums = '0123456789';
+    const alphabet = katakana + latin + nums;
     const fontSize = 14; const columns = canvas.width / fontSize;
     const drops = []; for(let i = 0; i < columns; i++) drops[i] = 1;
     function drawMatrix() {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = '#0F0'; ctx.font = fontSize + 'px monospace';
         for(let i = 0; i < drops.length; i++) {
-            const text = chars.charAt(Math.floor(Math.random() * chars.length));
+            const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
             ctx.fillText(text, i * fontSize, drops[i] * fontSize);
             if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
             drops[i]++;
         }
     }
-    setInterval(drawMatrix, 80); window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+    setInterval(drawMatrix, 80);
+    window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
 
-    /* UI Logic */
-    function toggleOverlay(id, show) {
-        const el = document.getElementById(id);
-        if (show) { el.style.display = "flex"; setTimeout(() => { el.classList.add("show"); }, 10); } 
-        else { el.classList.remove("show"); setTimeout(() => { el.style.display = "none"; }, 500); }
-    }
+    /* --- 解説＆アーカイブ開閉ロジック --- */
     function toggleDescription() {
-        const d = document.getElementById('hidden-desc'); const b = document.getElementById('toggle-desc-btn');
-        if (d.style.display === 'block') { d.style.display = 'none'; b.innerText = '▼ より詳細の解説を確認する...'; } 
-        else { d.style.display = 'block'; b.innerText = '▲ 解説を閉じる'; }
+        const desc = document.getElementById('hidden-desc');
+        const btn = document.getElementById('toggle-desc-btn');
+        if (desc.style.display === 'block') { desc.style.display = 'none'; btn.innerText = '▼ より詳細の解説を確認する...'; } 
+        else { desc.style.display = 'block'; btn.innerText = '▲ 解説を閉じる'; }
     }
-    function toggleArchive() { const c = document.getElementById('archive-content'); c.style.display = (c.style.display === 'block') ? 'none' : 'block'; }
-    function closeInstruction() { toggleOverlay("instruction-overlay", false); }
     
-    function generateXUrl(text) { return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text + "\n\n#神羅万象グリッド #FateMatrix")}&url=${encodeURIComponent(location.href)}`; }
-    function generateLineUrl(text) { return `https://social-plugins.line.me/lineit/share?text=${encodeURIComponent(text + "\n" + location.href)}`; }
+    function toggleArchive() {
+        const content = document.getElementById('archive-content');
+        content.style.display = (content.style.display === 'block') ? 'none' : 'block';
+    }
+
+    // 追加：アーカイブへジャンプする関数
+    function jumpToArchive() {
+        const content = document.getElementById('archive-content');
+        content.style.display = 'block'; // 強制オープン
+        document.getElementById('system-archive-section').scrollIntoView({behavior: 'smooth'});
+    }
+
+    /* --- 占いロジック --- */
+    let currentThemeJp = ""; let currentThemeEn = "";
+    function toggleOverlay(id, show) {
+        const overlay = document.getElementById(id);
+        if (show) { overlay.style.display = "flex"; setTimeout(() => { overlay.classList.add("show"); }, 10); }
+        else { overlay.classList.remove("show"); setTimeout(() => { overlay.style.display = "none"; }, 500); }
+    }
+    function closeInstruction() { toggleOverlay("instruction-overlay", false); }
     function generateCalendarUrl(title, desc) {
         const now = new Date();
-        const s = now.toISOString().replace(/-|:|\.\d\d\d/g, "");
-        const e = new Date(now.getTime()+60*60*1000).toISOString().replace(/-|:|\.\d\d\d/g, "");
-        const d = desc.replace(/<[^>]+>/g, "").replace(/\s+/g, " ");
-        return `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent("【神羅万象】" + title)}&dates=${s}/${e}&details=${encodeURIComponent(d)}`;
+        const start = now.toISOString().replace(/-|:|\.\d\d\d/g, "");
+        const endObj = new Date(now.getTime() + 60 * 60 * 1000);
+        const end = endObj.toISOString().replace(/-|:|\.\d\d\d/g, "");
+        const cleanDesc = desc.replace(/<br>/g, "\n").replace(/<[^>]+>/g, ""); 
+        return `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent("【神羅万象】" + title)}&dates=${start}/${end}&details=${encodeURIComponent(cleanDesc + "\n\n#神羅万象グリッド")}`;
     }
 
-    /* Logic */
-    let currentThemeJp = "", currentThemeEn = "";
-    function initiateDivination(jp, en) {
-        currentThemeJp = jp; currentThemeEn = en;
-        document.getElementById("instruction-theme-jp").innerText = jp;
-        document.getElementById("instruction-theme-en").innerText = en;
+    function initiateDivination(themeJp, themeEn) {
+        currentThemeJp = themeJp; currentThemeEn = themeEn;
+        document.getElementById("instruction-theme-jp").innerText = themeJp;
+        document.getElementById("instruction-theme-en").innerText = themeEn;
         toggleOverlay("instruction-overlay", true);
     }
 
@@ -285,51 +554,46 @@
         toggleOverlay("instruction-overlay", false);
         setTimeout(() => {
             toggleOverlay("upload-overlay", true);
-            const msgs = ["意識を無にしてください...", "ノイズを排除中...", "アカシックレコードへ接続...", "意識データのアップロード完了。"];
-            let idx = 0; const txt = document.getElementById("upload-text-dynamic");
-            txt.innerText = msgs[0]; txt.classList.add("fade-text");
-            const t = setInterval(() => {
-                idx++; if(idx < msgs.length) { txt.classList.remove("fade-text"); void txt.offsetWidth; txt.innerText = msgs[idx]; txt.classList.add("fade-text"); } 
-                else { clearInterval(t); }
+            const textEl = document.getElementById("upload-text-dynamic");
+            const messages = ["意識を無にしてください...", "ノイズを排除中...", "アカシックレコードへ接続...", "意識データのアップロード完了。"];
+            let msgIndex = 0; textEl.innerText = messages[0]; textEl.classList.add("fade-text");
+            const msgInterval = setInterval(() => {
+                msgIndex++;
+                if(msgIndex < messages.length) {
+                    textEl.classList.remove("fade-text"); void textEl.offsetWidth;
+                    textEl.innerText = messages[msgIndex]; textEl.classList.add("fade-text");
+                } else { clearInterval(msgInterval); }
             }, 2500);
+            
+            // アップロード終了直後に横ライン光線を発火
             setTimeout(() => {
-                clearInterval(t); toggleOverlay("upload-overlay", false);
-                const scan = document.getElementById('horizon-scan');
-                scan.classList.remove('animate-scan'); void scan.offsetWidth; scan.classList.add('animate-scan');
-                setTimeout(() => { divination(); }, 300);
+                clearInterval(msgInterval);
+                toggleOverlay("upload-overlay", false);
+                
+                // 横ラインアニメーション発火
+                const beam = document.getElementById('horizon-scan');
+                beam.classList.remove('animate-scan'); // リセット
+                void beam.offsetWidth; // リフロー
+                beam.classList.add('animate-scan'); // 発火
+
+                // 光線が通り過ぎた後にダウンロード開始
+                setTimeout(() => { divination(currentThemeJp, currentThemeEn); }, 300);
             }, 10000); 
         }, 300);
     }
 
-    function divination() {
+    function divination(themeJp, themeEn) {
         const fill = document.getElementById("progress-fill"); toggleOverlay("loading-overlay", true); fill.style.width = "0%";
-        let p = 0; const t = setInterval(() => {
-            p += Math.floor(Math.random() * 20); if(p > 100) p = 100; fill.style.width = `${p}%`;
-            if(p === 100) { clearInterval(t); setTimeout(() => { toggleOverlay("loading-overlay", false); showResult(); }, 500); }
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += Math.floor(Math.random() * 20);
+            if(progress > 100) progress = 100;
+            fill.style.width = `${progress}%`;
+            if(progress === 100) { clearInterval(interval); setTimeout(() => { toggleOverlay("loading-overlay", false); showResult(themeJp, themeEn); }, 500); }
         }, 150);
     }
 
-    /* History */
-    function saveHistory(theme, resultTitle) {
-        const h = JSON.parse(localStorage.getItem("shinraHistory") || "[]");
-        h.unshift({ date: new Date().toLocaleString(), theme: theme, title: resultTitle });
-        if(h.length > 30) h.pop();
-        localStorage.setItem("shinraHistory", JSON.stringify(h));
-    }
-    function showHistory() {
-        const h = JSON.parse(localStorage.getItem("shinraHistory") || "[]");
-        const l = document.getElementById("history-list"); l.innerHTML = "";
-        if(h.length === 0) l.innerHTML = "<div style='color:#666; text-align:center;'>NO LOGS FOUND</div>";
-        else h.forEach(i => {
-            const d = document.createElement("div"); d.className = "history-item";
-            d.innerHTML = `<div class="history-date">${i.date}</div><div class="history-theme">問: ${i.theme}</div><div class="history-result">${i.title}</div>`;
-            l.appendChild(d);
-        });
-        toggleOverlay("history-modal", true);
-    }
-    function closeHistory() { toggleOverlay("history-modal", false); }
-
-    /* DATA (COMPLETE) */
+    /* データセット（省略なし） */
     const ichingData = [
         { k: "乾為天", r: "けんいてん", d: "【System: ALL GREEN】全システム正常。圧倒的出力。迷わず実行せよ。" },
         { k: "坤為地", r: "こんいち", d: "【Standby Mode】今は受信待機。自ら送信するより、入力データを処理することで最適解が出る。" },
@@ -416,7 +680,9 @@
         { n: "天之御中主神", r: "あめのみなかぬし", d: "【Root User】<br>特権ID。全権限掌握。あなたがルールだ。コマンドを実行せよ。" }
     ];
 
-    function makeRuby(k, r) { return `<ruby>${k}<rt>${r}</rt></ruby>`; }
+    function makeRuby(kanji, kana) { return `<ruby>${kanji}<rt>${kana}</rt></ruby>`; }
+    function generateXUrl(text) { return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text + "\n\n#神羅万象グリッド #FateMatrix")}&url=${encodeURIComponent(location.href)}`; }
+    function generateLineUrl(text) { return `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(location.href)}&text=${encodeURIComponent(text)}`; }
 
     function showResult(themeJp, themeEn) {
         const modal = document.getElementById("result-area");
@@ -429,14 +695,21 @@
         let subRoll; do { subRoll = Math.floor(Math.random() * 64); } while (subRoll === (primaryRoll - 1));
         const subItem = ichingData[subRoll];
 
-        let htmlContent = ""; let shareText = ""; let calTitle = ""; let logTitle = "";
+        let htmlContent = ""; let shareText = ""; let calTitle = "";
 
         if (primaryRoll > 64) {
             const god = godsData[primaryRoll - 65];
             box.classList.add("mode-god");
             shareText = `【Code: GOD】${god.n}が降臨。運命のカーネルが書き換わりました。`;
-            calTitle = `【神意】${god.n}`; logTitle = `★神意: ${god.n}`;
-            htmlContent = `<div class="symbol">⛩️</div><div class="name">${makeRuby(god.n, god.r)}</div><div class="sub-name">ROOT ACCESS: GRANTED / ${themeEn}</div><div class="desc-box" style="border:1px solid #FFD700; color:#FFD700;">${god.d}</div>`;
+            calTitle = `【神意】${god.n}`;
+            // 修正：テーマ表示を追加
+            htmlContent = `
+                <div class="result-theme-header">${currentThemeJp}<span style="font-size:0.6em; margin-left:10px; opacity:0.8;">${currentThemeEn}</span></div>
+                <div class="symbol">⛩️</div>
+                <div class="name">${makeRuby(god.n, god.r)}</div>
+                <div class="sub-name">ROOT ACCESS: GRANTED</div>
+                <div class="desc-box" style="border:1px solid #FFD700; color:#FFD700;">${god.d}</div>
+            `;
         } else {
             const ichingItem = ichingData[primaryRoll - 1];
             const overrideRoll = Math.floor(Math.random() * 64) + 1;
@@ -444,17 +717,36 @@
                 const god = godsData[Math.floor(Math.random() * 17)];
                 box.classList.add("mode-override");
                 shareText = `【Override】${ichingItem.k}の結果に${god.n}が介入しました。`;
-                calTitle = `【神意介入】${ichingItem.k}×${god.n}`; logTitle = `⚠️Override: ${ichingItem.k} -> ${god.n}`;
-                htmlContent = `<div class="symbol">⚡️</div><div class="name">${makeRuby(ichingItem.k, ichingItem.r)}</div><div class="desc-box override-original"><strong>元の運命:</strong><br>${ichingItem.d}</div><div style="color:red; font-weight:bold; animation:blink 0.2s infinite alternate;">⚠️ SYSTEM OVERRIDE DETECTED ⚠️</div><div id="god-override-container" class="god-appear-container"><div class="desc-box" style="border:2px solid red; background:rgba(50,0,0,0.6); box-shadow:0 0 20px red;"><strong style="color:red;">>> ${makeRuby(god.n, god.r)} Protocol Activated:</strong><br>${god.d}</div></div>`;
-                setTimeout(() => { const g = document.getElementById("god-override-container"); if (g) g.classList.add("show-override"); }, 1000);
+                calTitle = `【神意介入】${ichingItem.k}×${god.n}`;
+                htmlContent = `
+                    <div class="result-theme-header">${currentThemeJp}<span style="font-size:0.6em; margin-left:10px; opacity:0.8;">${currentThemeEn}</span></div>
+                    <div class="symbol">⚡️</div>
+                    <div class="name">${makeRuby(ichingItem.k, ichingItem.r)}</div>
+                    <div class="sub-name">LOG: HEXAGRM ${primaryRoll}</div>
+                    <div class="desc-box override-original">
+                        <strong>元の運命（Initial Fate）:</strong><br>${ichingItem.d}
+                    </div>
+                    <div style="color:red; font-weight:bold; margin:20px 0; font-size:1.2em; animation:blink 0.2s infinite alternate;">⚠️ WARNING: SYSTEM OVERRIDE DETECTED ⚠️</div>
+                    <div id="god-override-container" class="god-appear-container">
+                        <div class="desc-box" style="border:2px solid red; background:rgba(50,0,0,0.6); box-shadow:0 0 20px red;">
+                            <strong style="color:red; font-size:1.1em;">>> ${makeRuby(god.n, god.r)} Protocol Activated:</strong><br>${god.d}
+                        </div>
+                    </div>
+                `;
+                setTimeout(() => { const godContainer = document.getElementById("god-override-container"); if (godContainer) godContainer.classList.add("show-override"); }, 1000);
             } else {
                 box.classList.add("mode-iching");
                 shareText = `【Result】${ichingItem.k}。${currentThemeJp}の解析結果が出ました。`;
-                calTitle = `【結果】${ichingItem.k}`; logTitle = `現象: ${ichingItem.k}`;
-                htmlContent = `<div class="symbol">☯</div><div class="name">${makeRuby(ichingItem.k, ichingItem.r)}</div><div class="sub-name">STATUS: ${currentThemeEn}</div><div class="desc-box">${ichingItem.d}</div>`;
+                calTitle = `【結果】${ichingItem.k}`;
+                htmlContent = `
+                    <div class="result-theme-header">${currentThemeJp}<span style="font-size:0.6em; margin-left:10px; opacity:0.8;">${currentThemeEn}</span></div>
+                    <div class="symbol">☯</div>
+                    <div class="name">${makeRuby(ichingItem.k, ichingItem.r)}</div>
+                    <div class="sub-name">STATUS: NORMAL</div>
+                    <div class="desc-box">${ichingItem.d}</div>
+                `;
             }
         }
-        saveHistory(currentThemeJp, logTitle);
         htmlContent += `<div class="sub-result-area"><div class="sub-result-title">> 潜在的な可能性（Sub Route）を検知:</div>【${subItem.k}】 ${subItem.d.substring(subItem.d.indexOf("】")+1)}</div>`;
 
         content.innerHTML = htmlContent;
@@ -466,10 +758,12 @@
     }
     
     async function shareImage() {
-        const t = document.getElementById("capture-target");
+        const target = document.getElementById("capture-target");
         try {
-            const c = await html2canvas(t, { backgroundColor: '#000', scale: 2 });
-            const link = document.createElement("a"); link.download = "shinra_matrix_result.png"; link.href = c.toDataURL(); link.click();
+            const canvas = await html2canvas(target, { backgroundColor: '#000', scale: 2 });
+            const link = document.createElement("a");
+            link.download = "shinra_matrix_result.png";
+            link.href = canvas.toDataURL(); link.click();
         } catch (e) { alert("Error: " + e); }
     }
     function closeResult() { toggleOverlay("result-area", false); const actions = document.getElementById("action-buttons"); setTimeout(() => { actions.style.display = "none"; }, 500); }
